@@ -1,13 +1,12 @@
-# Juniper Workshop 2019 - By Acorus Networks
+# LAB L3VPN - By Acorus Networks
 
 ### This lab is based on Juniper Networks VQFX repo :
 https://github.com/Juniper/vqfx10k-vagrant
 
 
-
 # Requirement
 
-This Vagrantfile will spawn 3 instances of VQFX (Full) and 1 ubuntu server
+This Vagrantfile will spawn 3 instances of VQFX (Full), 3 customers and 1 server for management
 
 ### Resources
  - RAM : 10G
@@ -53,6 +52,7 @@ All VQFX and server will be preconfigured.
 
 
 - vqfx: Ansible is used to configure interfaces
+- cust: Customer
 - srv: Ansible is used to prepare the machine (packages, ansible and demo files)
 
 ## Tools
@@ -72,8 +72,8 @@ $ ssh acorus@{{your_pod_ip}}
 #### Check vagrant env (shoud be ready to use) :
 
 ```
-acorus@demo01:~$ cd juniper-automation-labs
-acorus@demo01:~/juniper-automation-labs$ vagrant status
+acorus@demo01:~$ cd lab-l3vpn
+acorus@demo01:~/lab-l3vpn$ vagrant status
 ```
 
 #### SSH to devices on lab :
@@ -82,8 +82,8 @@ Open 3 more terminals, connnect to your POD demo server in each. You should have
 Then SSH to each device in the lab, repeat for vqfx1, vqfx2, vqfx3, srv.
 
 ```
-acorus@demo01:~$ cd juniper-automation-labs
-acorus@demo01:~/juniper-automation-labs$ vagrant ssh vqfx1
+acorus@demo01:~$ cd lab-l3vpn
+acorus@demo01:~/lab-l3vpn$ vagrant ssh vqfx1
 ```
 
 #### Test on VQFX1 :
