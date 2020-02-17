@@ -1,9 +1,5 @@
 # LAB L3VPN - By Acorus Networks
 
-### This lab is based on Juniper Networks VQFX repo :
-https://github.com/Juniper/vqfx10k-vagrant
-
-
 # Requirement
 
 This Vagrantfile will spawn 3 instances of VQFX (Full), 3 customers and 1 server for management
