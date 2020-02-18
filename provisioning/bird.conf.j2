@@ -12,8 +12,7 @@ router id {{ bgp.id }};
 log syslog { debug, trace, info, remote, warning, error, auth, fatal, bug };
 
 protocol direct my_network {
-    interface "lo*", "eth2";
-    #import where net ~ MY_NETWORKS;
+    interface "eth2";
     import all;
     export none;
 }
@@ -25,7 +24,6 @@ protocol kernel {
   learn;           # Allow other daemons to learn about routes from the kernel routing table
   merge paths 8;
 }
-
 
 # This pseudo-protocol watches all interface up/down events.
 protocol device {
@@ -39,5 +37,4 @@ protocol bgp session{{ loop.index }} {
   local as MY_ASN;
   neighbor {{ session.peer_ip }} as {{ session.peer_asn }};
 }
-
 {% endfor %}

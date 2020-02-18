@@ -2,6 +2,5 @@ bgp:
   id: 3.3.3.3
   asn: 30003
   sessions:
-    ip: 100.64.3.1
     peer_ip: 100.64.3.0
     peer_asn: 35280
