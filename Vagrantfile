@@ -227,8 +227,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     if !Vagrant::Util::Platform.windows?
         config.vm.provision "ansible" do |ansible|
             ansible.groups = {
-                "vqfx10k" => ["vqfx1", "vqfx2", "vqfx3"],
-                "vqfx10k-pfe" => ["vqfx1-pfe", "vqfx2-pfe", "vqfx3-pfe"],
+                "vqfx10k" => ["vqfx1", "vqfx2"]#, "vqfx3"],
+                "vqfx10k-pfe" => ["vqfx1-pfe", "vqfx2-pfe"] #, "vqfx3-pfe"],
                 "all:children" => ["vqfx10k", "vqfx10k-pfe"]
             }
             ansible.playbook = "provisioning/deploy-config.p.yaml"
