@@ -61,9 +61,10 @@ interfaces {
 
 {% for interface in interfaces %}
     {{ interface.name }} {
+        description "{{ interface.ip }}/{{ interface.netmask }}"
         unit 0 {
             family inet {
-                address {{ interface.ip }}/24;
+                address {{ interface.ip }}/{{ interface.netmask }};
             }
         }
     }
