@@ -1,0 +1,66 @@
+#jinja2: lstrip_blocks: "True", trim_blocks: "True"
+
+{% if l3vpn is defined %}
+{% for interface in l2circuit_interfaces %}
+
+
+groups {
+
+   {%+ if load_method is defined and load_method == "replace" %}replace:{{ "\n" }}{% endif %}
+
+   l2circuit-interface {
+
+    interfaces {
+        <*> {
+            encapsulation ethernet-ccc;
+        }
+        <*> {
+            unit 0 {
+                family ccc;
+            }
+        }
+    }
+}}
+
+interfaces {
+
+  {%+ if load_method is defined and load_method == "replace" %}replace:{{ "\n" }}{% endif %}
+  {{ interface.interface }} {
+
+    {{ macro.interface_description(interface, "Cust") }}
+
+    {% if interface.mtu is defined %}
+    mtu {{ interface.mtu }};
+    {%endif %}
+
+    apply-groups l2circuit-interface;
+
+  }
+}
+
+protocols {
+
+   l2circuit {
+
+    traceoptions {
+        file l2circuit;
+        flag error;
+        flag state;
+    }
+
+    neighbor {{ interface.loopback_ipv4 }} {
+        interface {{ interface.interface }}.0 {
+            virtual-circuit-id {{ interface.circuit_id }};
+            {{ macro.interface_description(interface, "Cust") }};
+            no-control-word;
+        }
+    }
+}}
+
+
+{# endfor interface in l2circuit_interfaces #}
+{% endfor %}
+
+{# endif l2circuit_interfaces is defined #}
+{% endif %}
+

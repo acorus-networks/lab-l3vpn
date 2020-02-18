@@ -2,80 +2,45 @@ protocols {
 
   bgp {
 
-    {% for peer in peers %}
     replace:
-    group ipv4-{{ peer.name }} {
-      description "IPV4 AS{{ peer.name }}"
-      type internal;
+    group ipv4-ibgp {
 
+      type internal;
+      description "iBGP {{ my_asn }}"
+      
       family inet {
         unicast;
       }
 
-      local-as 65500;
-      local-address {{ peer.local_ipv4 }};
+      family inet-vpn {
+        unicast;
+      }
+
+      local-as {{ my_asn }};
+      local-address {{ my_loopback }};
       advertise-inactive;
 
-      neighbor {{ peer.neighbor_ipv4  }};
+      {% for peer in peers %}
+      neighbor {{ peer.ipv4 }};
+      {% endfor %}
 
-      import ipv4-{{ peer.name }};
-      export send-static;
+      import ipv4-ibgp-in;
+      export ipv4-ibgp-out;
 
     }
-    {% endfor %}
   }
 }
 
 
 policy-options {
 
-  {% for peer in peers %}
   replace:
-  policy-statement ipv4-{{ peer.name }} {
-
-    {% if (filtered_prefixes is defined) and (filtered_prefixes[peer.asn] is defined) and (filtered_prefixes[peer.asn]['ipv4'] is defined) and ((filtered_prefixes[peer.asn]['ipv4']|length ) > 0) %}
-
-    term rejected-prefixes {
-      from {
-        {% for prefix in filtered_prefixes[peer.asn]['ipv4'] %}
-          route-filter {{ prefix }} exact;
-        {% endfor %}
-      }
-      then reject;
-    }
+  policy-statement ipv4-ibgp-in {
     then accept;
-    {% else %}
-    then accept;
-    {% endif %}
-
   }
-  {% endfor %}
 
-  policy-statement send-static {
-        term 1 {
-            from protocol static;
-            then accept;
-        }
-    }
+  replace:
+  policy-statement ipv4-ibgp-out {
+    then accept;
+  }
 }
-
-{% if ansible_host == 'vqfx1' %}
-{% set prefix = "1.0.0.0/8" %}
-{% elif ansible_host == 'vqfx2' -%}
-{% set prefix = "2.0.0.0/8" %}
-{% elif ansible_host == 'vqfx3' -%}
-{% set prefix = "3.0.0.0/8" %}
-{% endif %}
-
-routing-options {
-    static {
-        route {{ prefix }} {
-            discard;
-            install;
-            readvertise;
-            active;
-        }
-    }
-}
-
-

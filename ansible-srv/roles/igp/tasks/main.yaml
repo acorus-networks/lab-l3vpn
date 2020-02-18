@@ -6,6 +6,7 @@
 
 - file: path=~/configs/{{ ansible_host }}/igp.conf.part state=absent
 - file: path=~/configs/{{ ansible_host }}/ospf.conf.part state=absent
+- file: path=~/configs/{{ ansible_host }}/mpls.conf.part state=absent
 - file: path=~/configs/{{ ansible_host }}/{{ ansible_host }}.conf state=absent
 
 - name: IGP Configuration

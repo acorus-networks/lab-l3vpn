@@ -29,7 +29,10 @@
         - python-pip 
 
     - name: install pip modules
-      command: pip install junos-eznc jxmlease    
+      command: pip install junos-eznc jxmlease paramiko   
+
+    - name: paramiko upgrade
+      command: pip install paramiko --upgrade
 
     - name: mkdir for juniper role
       command: mkdir -p /home/vagrant/.ansible/roles
