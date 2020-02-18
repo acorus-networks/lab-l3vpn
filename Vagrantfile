@@ -171,7 +171,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     ## Server          #######
     ##########################
     config.vm.define "srv" do |srv|
-        srv.vm.box = "bento/ubuntu-16.04"
+        srv.vm.box = "ubuntu/xenial64"
         srv.vm.hostname = "server"
         # eth0 
         srv.vm.network 'private_network', ip: "192.168.100.10", virtualbox__intnet: "#{UUID}_seg61"
@@ -184,9 +184,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     config.vm.define "cust1" do |cust|
         cust.vm.box = "debian/buster64"
         cust.vm.hostname = "cust1"
-        # eth0 
-        cust.vm.network 'private_network', ip: "192.168.100.11", virtualbox__intnet: "#{UUID}_seg61"
         # eth1
+        cust.vm.network 'private_network', ip: "192.168.100.11", virtualbox__intnet: "#{UUID}_seg61"
+        # eth2
         cust.vm.network 'private_network', ip: "100.64.1.1/31", virtualbox__intnet: "#{UUID}_seg3"
         cust.vm.boot_timeout = 1200
         cust.ssh.insert_key = true
@@ -197,9 +197,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     config.vm.define "cust2" do |cust|
         cust.vm.box = "debian/buster64"
         cust.vm.hostname = "cust2"
-        # eth0 
-        cust.vm.network 'private_network', ip: "192.168.100.12", virtualbox__intnet: "#{UUID}_seg61"
         # eth1
+        cust.vm.network 'private_network', ip: "192.168.100.12", virtualbox__intnet: "#{UUID}_seg61"
+        # eth2
         cust.vm.network 'private_network', ip: "100.64.2.2", virtualbox__intnet: "#{UUID}_seg13"
         cust.vm.boot_timeout = 1200
         cust.ssh.insert_key = true
@@ -210,9 +210,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     config.vm.define "cust3" do |cust|
         cust.vm.box = "debian/buster64"
         cust.vm.hostname = "cust3"
-        # eth0 
+        # eth1 
         cust.vm.network 'private_network', ip: "192.168.100.13", virtualbox__intnet: "#{UUID}_seg61"
-        # eth1
+        # eth2
         cust.vm.network 'private_network', ip: "100.64.3.2", virtualbox__intnet: "#{UUID}_seg23"
         cust.vm.boot_timeout = 1200
         cust.ssh.insert_key = true
