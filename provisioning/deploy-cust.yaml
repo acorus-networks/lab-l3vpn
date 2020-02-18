@@ -24,7 +24,16 @@
       vars:
         packages:
         - bird
+        - vim
 
+    - name: Build configuration
+      template: 
+        src=bird.conf.j2 
+        dest=/tmp/{{ inventory_hostname }}_bird.conf
+
+    - file: 
+        src=/tmp/{{ inventory_hostname }}_bird.conf
+        dest=/etc/bird/bird.conf
 
 
     # - name: mkdir for juniper role
