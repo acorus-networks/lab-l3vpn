@@ -1,0 +1,7 @@
+bgp:
+  id: 2.2.2.2
+  asn: 30002
+  sessions:
+    ip: 100.64.2.1
+    peer_ip: 100.64.2.0
+    peer_asn: 35280

@@ -1,0 +1,119 @@
+#jinja2: lstrip_blocks: "True", trim_blocks: "True"
+
+{% set router_type = inventory_hostname_short | regex_search('^[a-z]*') %}
+
+{% if igp is defined and router_type == 'core' %}
+
+groups {
+  replace:{{ "\n" }}
+  ldp-interface {
+    protocols {
+      ldp {
+        interface <> {
+          hello-interval 1;
+          hold-time 5;
+        }
+      }
+    }
+  }
+  replace:{{ "\n" }}
+  lsp-default {
+    protocols {
+      mpls {
+        label-switched-path <> {
+          optimize-timer 1800;
+          adaptive;
+        }
+      }
+    }
+  }
+  replace:{{ "\n" }}
+  mpls-interface {
+    interfaces {
+      <*> {
+        unit <*> {
+          family mpls;
+        }
+      }
+    }
+  }
+}
+
+
+{% if igp.loopbacks is defined and router_type == 'core' %}
+{% for loopback in igp.loopbacks %}
+{% if loopback.vrf is not defined %}
+protocols {
+
+  rsvp {
+    load-balance bandwidth;
+    interface lo0.{{ loopback.vlan }};
+  }
+
+  ldp {
+    track-igp-metric;
+    keepalive-interval 3;
+    keepalive-timeout 18;
+
+    interface lo0.{{ loopback.vlan }} apply-groups ldp-interface;
+  }
+}
+{# Endif loopback.vrf is not defined (inet0) #}
+{% endif %}
+{# Endfor loopback in igp.loopbacks #}
+{% endfor %}
+{# Endif igp.loopbacks is defined #}
+{% endif %}
+
+
+{% if igp.neighbors is defined and router_type == 'core' %}
+{% for neighbor in igp.neighbors %}
+{% if neighbor.vlans is defined and (neighbor.type == "local-core" or neighbor.type == "metro-core" or neighbor.type == "national-core" or neighbor.type == "international-core" or neighbor.type == "transatlantic-core") %}
+
+{% for vlan in neighbor.vlans %}
+{% if vlan.vrf is not defined %}
+{% set id = vlan.id %}
+
+
+protocols {
+
+  rsvp {
+    interface {{ neighbor.interface }}.{{ id }} aggregate;
+  }
+
+  mpls {
+    apply-groups lsp-default;
+    path-mtu allow-fragmentation;
+    path-mtu rsvp mtu-signaling;
+    statistics file mpls-stats;
+    optimize-aggressive;
+    interface {{ neighbor.interface }}.{{ id }};
+  }
+
+  ldp {
+    interface {{ neighbor.interface }}.{{ id }} apply-groups ldp-interface;
+  }
+}
+interfaces {
+
+  {{ neighbor.interface }}.{{ id }} {
+    apply-groups mpls-interface;
+  }
+}
+{# Endif vlan.vrf is not defined #}
+{% endif %}
+{# for vlan in neighbor.vlans #}
+{% endfor %}
+
+{# Endif neighbor.type equal core interface #}
+{% endif %}
+{# Endfor neighbor in igp.neighbors #}
+{% endfor %}
+{# Endif igp.neighbors is defined #}
+{% endif %}
+
+
+{% endif %}
+
+
+
