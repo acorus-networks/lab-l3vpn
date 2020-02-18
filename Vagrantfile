@@ -187,7 +187,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         # eth0 
         cust.vm.network 'private_network', ip: "192.168.100.11", virtualbox__intnet: "#{UUID}_seg61"
         # eth1
-        cust.vm.network 'private_network', ip: "100.64.1.2", virtualbox__intnet: "#{UUID}_seg3"
+        cust.vm.network 'private_network', ip: "100.64.1.1/31", virtualbox__intnet: "#{UUID}_seg3"
         cust.vm.boot_timeout = 1200
         cust.ssh.insert_key = true
     end
