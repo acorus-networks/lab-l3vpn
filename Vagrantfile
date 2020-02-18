@@ -134,7 +134,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
         # DO NOT REMOVE / NO VMtools installed
         vqfxpfe.vm.synced_folder '.', '/vagrant', disabled: true
-        vqfxpfe.vm.network 'private_network', auto_config: false, nic_type: '82540EM', virtualbox__intnet: "#{UUID}_vqfx_internal_2"
+        vqfxpfe.vm.network 'private_network', auto_config: false, nic_type: '82540EM', virtualbox__intnet: "#{UUID}_vqfx_internal_3"
 
         # In case you have limited resources, you can limit the CPU used per vqfx-pfe VM, usually 50% is good
         # vqfxpfe.vm.provider "virtualbox" do |v|
@@ -151,7 +151,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         vqfx.vm.synced_folder '.', '/vagrant', disabled: true
 
         # Management port
-        vqfx.vm.network 'private_network', auto_config: false, nic_type: '82540EM', virtualbox__intnet: "#{UUID}_vqfx_internal_2"
+        vqfx.vm.network 'private_network', auto_config: false, nic_type: '82540EM', virtualbox__intnet: "#{UUID}_vqfx_internal_3"
         vqfx.vm.network 'private_network', auto_config: false, nic_type: '82540EM', virtualbox__intnet: "#{UUID}_reserved-bridge"
 
         # Dataplane ports
