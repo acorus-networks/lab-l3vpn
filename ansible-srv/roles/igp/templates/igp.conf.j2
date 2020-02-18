@@ -10,6 +10,7 @@ interfaces {
     unit {{ loopback.vlan }} {
 
 {% if loopback.ipv4 is defined %}
+      description "Loopback: {{ loopback.ipv4.local_ip }}";
       family inet {
         address {{ loopback.ipv4.local_ip }}/{{ loopback.ipv4.netmask }};
       }

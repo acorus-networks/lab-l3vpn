@@ -23,16 +23,5 @@
     dest=~/configs/{{ ansible_host }}/{{ item }}.part
   tags:
     - ospf
-    - igp
   with_items:
     - ospf.conf
-
-- name: MPLS Configuration
-  template:
-    src={{ item }}.j2
-    dest=~/configs/{{ ansible_host }}/{{ item }}.part
-  tags:
-    - mpls
-    - igp
-  with_items:
-    - mpls.conf

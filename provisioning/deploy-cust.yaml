@@ -25,6 +25,7 @@
         packages:
         - bird
         - vim
+        - net-tools
 
     - name: Build configuration
       template: 
