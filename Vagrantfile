@@ -232,7 +232,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
                 "all:children" => ["vqfx10k", "vqfx10k-pfe"]
             }
             ansible.playbook = "provisioning/deploy-config.p.yaml"
-    end
+        end
     end
 
     ##############################
@@ -245,6 +245,19 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
                 "server" => ["srv"]
             }
             ansible.playbook = "provisioning/deploy-srv.yaml"
+        end
     end
+
+    ##############################
+    ## Server provisioning     ###
+    ## exclude Cust host    ###
+    ##############################
+    if !Vagrant::Util::Platform.windows?
+        config.vm.provision "ansible" do |ansible|
+            ansible.groups = {
+                "cust" => ["cust1", "cust2", "cust3"]
+            }
+            ansible.playbook = "provisioning/deploy-cust.yaml"
+        end
     end
 end

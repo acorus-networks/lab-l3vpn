@@ -1,10 +1,14 @@
 
 interfaces:
     - name: xe-0/0/0
-      ip: 10.0.1.2
+      ip: 10.0.1.1
+      netmask: 31
     - name: xe-0/0/1
-      ip: 10.0.2.1
+      ip: 10.0.2.0
+      netmask: 31
     - name: xe-0/0/2
-      ip: 10.64.2.1
+      ip: 100.64.2.0
+      netmask: 31
     - name: xe-0/0/4
       ip: 192.168.100.21
+      netmask: 24
