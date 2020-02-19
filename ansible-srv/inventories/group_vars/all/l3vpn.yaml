@@ -9,20 +9,11 @@ l3vpn_all_vrf:
     slug: vpn-aws-cust-1
     rd: "65500:1"
     target: "65000:1"
-
-# Netbox via VRF
-# l3vpn_instances:
-#   'vpn-aws-cust-1':
-#     name: AWS Customer 1
-#     slug: aws-cust-1
-#     id: 1
-
-# l3vpn_vrf:
-# vpn-1: 
-#   name: vpn-1
-#   target: 65000:1
-#   rd: 65001:1
-
+  'vpn-cust-x':
+    name: VPN Customer x
+    slug: vpn-cust-x
+    rd: "65500:2"
+    target: "65000:2"
 
 # A voir si besoin
 l3vpn_lsp:
