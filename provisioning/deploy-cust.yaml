@@ -34,10 +34,10 @@
         dest=/etc/network/interfaces
 
     - name: Quick fix interfaces
-      command: ifdown lo && ifup lo
+      command: "sudo ifdown lo && sudo ifup lo"
 
     - name: Quick fix interfaces
-      command: ifdown eth2 && ifup eth2    
+      command: "sudo ifdown eth2 && sudo ifup eth2"   
 
     - name: Build and copy BIRD IPv4 configuration
       template:
