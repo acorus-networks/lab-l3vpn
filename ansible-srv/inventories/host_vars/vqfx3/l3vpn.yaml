@@ -1,8 +1,8 @@
 ---
 
 l3vpn_vrf_local:
-  - 'vpn-cust-x'
-  - 'vpn-aws-cust-1'
+  - vpn-cust-x
+  - vpn-aws-cust-1
 
 customer_interfaces:
 - asn: 30003
