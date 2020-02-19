@@ -1,0 +1,70 @@
+#jinja2: lstrip_blocks: "True", trim_blocks: "True"
+{% import 'macro.j2' as macro with context %}
+
+{% if customer_interfaces is defined %}
+{% for interface in customer_interfaces %}
+
+interfaces {
+
+  replace:
+  {{ interface.interface }} {
+
+    description "Cust: {{ interface.name }}"
+
+    {% if interface.mtu is defined %}
+    mtu {{ interface.mtu }}
+    {%endif %}
+
+
+    {% if interface.vlans is defined %}
+    {% for vlan in interface.vlans %}
+
+    {% if vlan.id != 0 and loop.index == 1 -%}vlan-tagging;{% endif %}
+
+    unit {{ vlan.id }} {
+
+      {%+ if vlan.id != 0 -%}vlan-id {{ vlan.id }};{% endif %}
+      description "Cust-vrf: {{ interface.name }} - {% if vlan.ipv4.peer_ip is defined %} {{ vlan.ipv4.peer_ip }}{% endif %}{% if vlan.ipv6.peer_ip is defined %} {{ vlan.ipv6.peer_ip }}{% endif %}"
+
+      {% if vlan.ipv4 is defined %}
+      family inet {
+        address {{ vlan.ipv4.local_ip }}/{{ vlan.ipv4.netmask }};
+      }
+      {% endif %}
+
+      {% if vlan.ipv6 is defined %}
+      family inet6 {
+        address {{ vlan.ipv6.local_ip }}/{{ vlan.ipv6.netmask }};
+      }
+      {% endif %}
+
+    }
+    {# Endfor vlan in interface.vlans #}
+    {% endfor %}
+    {# Endif interface.vlans is defined #}
+    {% endif %}
+
+  }
+}
+
+{% if interface.vlans is defined %}
+{% for vlan in interface.vlans %}
+{% if vlan.vrf is defined %}
+routing-instances {
+  {{ vlan.vrf }} {
+    interface {{ interface.interface }}.{{ vlan.id }};
+  }
+}
+{# Endif vlan.vrf is defined #}
+{% endif %}
+{# Endfor vlan in interface.vlans #}
+{% endfor %}
+{# Endif interface.vlans is defined #}
+{% endif %}
+
+
+{# endfor interface in customer_interfaces #}
+{% endfor %}
+
+{# endif customer_interfaces is defined #}
+{% endif %}

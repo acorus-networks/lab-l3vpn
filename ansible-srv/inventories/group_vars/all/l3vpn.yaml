@@ -2,17 +2,31 @@
 
 my_asn: 35280
 
-l3vpn_general:
-  rd: 65500
-  target: 65000
+# Netbox via VRF
+l3vpn_all_vrf:
+  'vpn-aws-cust-1':
+    name: VPN AWS Customer 1
+    slug: vpn-aws-cust-1
+    rd: 65500:1
+    target: 65000:1
 
+# Netbox via VRF
+# l3vpn_instances:
+#   'vpn-aws-cust-1':
+#     name: AWS Customer 1
+#     slug: aws-cust-1
+#     id: 1
+
+# l3vpn_vrf:
+# vpn-1: 
+#   name: vpn-1
+#   target: 65000:1
+#   rd: 65001:1
+
+
+# A voir si besoin
 l3vpn_lsp:
   - device: vqfx1
   - device: vqfx2
 
-l3vpn_instances:
-  'vpn-aws-cust-1':
-    name: AWS Customer 1
-    slug: aws-cust-1
-    id: 1
 

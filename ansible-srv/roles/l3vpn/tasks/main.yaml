@@ -4,16 +4,17 @@
 - name: Create host specific configuration directory
   file: path=~/configs/{{ ansible_host }} state=directory
 
-- file: path=~/configs/{{ ansible_host }}/mpls_lsp.conf.part state=absent
-- file: path=~/configs/{{ ansible_host }}/vrf.conf.part state=absent
-- file: path=~/configs/{{ ansible_host }}/sessions.conf.part state=absent
+- file: path=~/configs/{{ ansible_host }}/01_mpls_lsp.conf.part state=absent
+- file: path=~/configs/{{ ansible_host }}/02_vrf.conf.part state=absent
+- file: path=~/configs/{{ ansible_host }}/03_sessions.conf.part state=absent
+- file: path=~/configs/{{ ansible_host }}/04_sessions.conf.part state=absent
 - file: path=~/configs/{{ ansible_host }}/{{ ansible_host }}.conf state=absent
 
 
 - name: LSP
   template:
     src={{ item }}.j2
-    dest=~/configs/{{ ansible_host }}/{{ item }}.part
+    dest=~/configs/{{ ansible_host }}/01_{{ item }}.part
   tags:
     - l3vpn
   with_items:
@@ -22,26 +23,26 @@
 - name: VRF L3VPN Configuration
   template:
     src={{ item }}.j2
-    dest=~/configs/{{ ansible_host }}/{{ item }}.part
+    dest=~/configs/{{ ansible_host }}/02_{{ item }}.part
   tags:
     - l3vpn
   with_items:
     - vrf.conf
 
+- name: Interfaces customers
+  template:
+    src={{ item }}.j2
+    dest=~/configs/{{ ansible_host }}/03_{{ item }}.part
+  tags:
+    - l3vpn
+  with_items:
+    - interfaces.conf
+
 - name: BGP Session customers
   template:
     src={{ item }}.j2
-    dest=~/configs/{{ ansible_host }}/{{ item }}.part
+    dest=~/configs/{{ ansible_host }}/04_{{ item }}.part
   tags:
     - l3vpn
   with_items:
     - sessions.conf
-
-# - name: OSPF Configuration
-#   template:
-#     src={{ item }}.j2
-#     dest=~/configs/{{ ansible_host }}/{{ item }}.part
-#   tags:
-#     - ospf
-#   with_items:
-#     - ospf.conf
