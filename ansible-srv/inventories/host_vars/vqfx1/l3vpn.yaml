@@ -1,0 +1,22 @@
+---
+
+l3vpn_connectors:
+  'aws-cust-1':
+    - interface: xe-0/0/2
+
+l3vpn_sessions:
+  - name: AWS
+    slug: aws
+    vrf: aws-cust-1 
+    peer_asn: 30001
+    ipv4:
+      peer_ip: 100.64.1.1
+
+l3vpn_sessions:
+- vrf: aws-cust-1 
+  sessions:
+  - name: AWS
+    slug: aws
+    peer_asn: 30001
+    ipv4:
+      peer_ip: 100.64.1.1

@@ -8,6 +8,15 @@
 - file: path=~/configs/{{ ansible_host }}/{{ ansible_host }}.conf state=absent
 
 
+- name: LSP
+  template:
+    src={{ item }}.j2
+    dest=~/configs/{{ ansible_host }}/{{ item }}.part
+  tags:
+    - l3vpn
+  with_items:
+    - mpls_lsp.conf
+
 - name: BGP L3VPN Configuration
   template:
     src={{ item }}.j2
@@ -16,6 +25,15 @@
     - l3vpn
   with_items:
     - bgp.conf
+
+- name: BGP Session customers
+  template:
+    src={{ item }}.j2
+    dest=~/configs/{{ ansible_host }}/{{ item }}.part
+  tags:
+    - l3vpn
+  with_items:
+    - sessions.conf
 
 # - name: OSPF Configuration
 #   template:

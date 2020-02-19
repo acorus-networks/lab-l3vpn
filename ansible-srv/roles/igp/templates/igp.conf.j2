@@ -48,7 +48,7 @@ interfaces {
 
       {%+ if vlan.id != 0 %}vlan-id {{ vlan.id }};{% endif %}
 
-      description "Core: {{ peer }}"
+      description "Core: {{ peer }} - {{ vlan.ipv4.local_ip }}/{{ vlan.ipv4.netmask }}"
 
       {% if vlan.ipv4 is defined %}
       family inet {

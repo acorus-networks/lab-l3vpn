@@ -1,66 +1,61 @@
 #jinja2: lstrip_blocks: "True", trim_blocks: "True"
 
-{% if l3vpn is defined %}
-{% for interface in l2circuit_interfaces %}
+{% if l3vpn_connectors is defined %}
+{% for name,connectors in l3vpn_connectors.items() %}
 
-
-groups {
-
-   {%+ if load_method is defined and load_method == "replace" %}replace:{{ "\n" }}{% endif %}
-
-   l2circuit-interface {
-
-    interfaces {
-        <*> {
-            encapsulation ethernet-ccc;
-        }
-        <*> {
-            unit 0 {
-                family ccc;
-            }
-        }
-    }
-}}
-
-interfaces {
-
-  {%+ if load_method is defined and load_method == "replace" %}replace:{{ "\n" }}{% endif %}
-  {{ interface.interface }} {
-
-    {{ macro.interface_description(interface, "Cust") }}
-
-    {% if interface.mtu is defined %}
-    mtu {{ interface.mtu }};
-    {%endif %}
-
-    apply-groups l2circuit-interface;
-
-  }
+replace:
+routing-instances vpn-{{ name|lower }} {
+    instance-type vrf;
+    {% if connectors is defined %}
+    {% for connector in connectors %}
+    interface {{ connector.interface }};
+    {% endfor %}
+    {% endif %}
+    vrf-import vpn-{{ name|lower }}-in;
+    vrf-export vpn-{{ name|lower }}-out;
+    route-distinguisher {{ l3vpn_general.rd }}:{{ l3vpn_instances[name].id }};
+    vrf-target target:{{ l3vpn_general.target }}:{{ l3vpn_instances[name].id }};
 }
 
-protocols {
+policy-options {
+    replace:
+    community VPN-{{ name|upper }} members target:{{ l3vpn_general.target }}:{{ l3vpn_instances[name].id }};
+}
 
-   l2circuit {
-
-    traceoptions {
-        file l2circuit;
-        flag error;
-        flag state;
-    }
-
-    neighbor {{ interface.loopback_ipv4 }} {
-        interface {{ interface.interface }}.0 {
-            virtual-circuit-id {{ interface.circuit_id }};
-            {{ macro.interface_description(interface, "Cust") }};
-            no-control-word;
+policy-options {
+    replace:
+    policy-statement vpn-{{ name|lower }}-in {
+        term bgp {
+            from {
+                protocol bgp;
+                community VPN-{{ name|upper }};
+            }
+            then accept;
         }
+        then reject;
     }
-}}
+}
 
+policy-options {
+    replace:
+    policy-statement vpn-{{ name|lower }}-out {
+        term bgp {
+            from {
+                protocol bgp;
+            }
+            then {
+                community add VPN-{{ name|upper }};
+                accept;
+            }
+        }
+        then reject;
+    }
+}
 
-{# endfor interface in l2circuit_interfaces #}
+{# for connector in l3vpn_connectors #}
 {% endfor %}
 
-{# endif l2circuit_interfaces is defined #}
+{# endif l3vpn_connectors is defined #}
 {% endif %}
+
 

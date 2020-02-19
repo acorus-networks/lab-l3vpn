@@ -1,0 +1,18 @@
+---
+
+my_asn: 35280
+
+l3vpn_general:
+  rd: 65500
+  target: 65000
+
+l3vpn_lsp:
+  - device: vqfx1
+  - device: vqfx2
+
+l3vpn_instances:
+  'aws-cust-1':
+    name: AWS Customer 1
+    slug: aws-cust-1
+    id: 1
+

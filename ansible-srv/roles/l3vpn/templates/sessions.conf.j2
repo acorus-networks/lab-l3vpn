@@ -1,0 +1,48 @@
+#jinja2: lstrip_blocks: "True", trim_blocks: "True"
+
+{% set ip_version='ipv4' %}
+{% set group_name='ipv4-customers' %}
+
+{% if l3vpn_sessions is defined %}
+{% for vrf_sessions in l3vpn_sessions %}
+
+routing-instances {
+  {{ vrf_sessions.vrf }} {
+    protocols {
+      bgp {
+        replace:
+        group {{ group_name }} {
+          type external;
+          description "Group {{ ip_version }} customers";
+          multipath;
+          family inet {
+            unicast;
+          }
+          local-as {{ my_asn }};
+        }
+      }
+    }
+  }
+}
+{% for session in vrf_sessions.sessions %}
+routing-instances {
+  {{ session.vrf }} {
+    protocols {
+      bgp {
+        group {{ group_name }} {
+          replace:
+        neighbor {{ session.ipv4.peer_ip }} {
+            description "AS{{ session.peer_asn }} {{ peer_name }}";
+            peer-as {{ session.peer_asn }};
+        }
+      }
+    }
+  }
+}
+{# for session in vrf_sessions.sessions #}
+{% endfor %}
+
+{# for vrf_sessions in l3vpn_sessions #}
+{% endfor %}
+{# if l3vpn_sessions is defined #}
+{% endif %}
