@@ -25,6 +25,7 @@ routing-instances {
   }
 }
 {% for session in vrf_sessions.sessions %}
+{% if session.ipv4 is defined %}
 routing-instances {
   {{ vrf_sessions.vrf }} {
     protocols {
@@ -40,6 +41,24 @@ routing-instances {
     }
   }
 }
+{% endif %}
+{% if session.ipv6 is defined %}
+routing-instances {
+  {{ vrf_sessions.vrf }} {
+    protocols {
+      bgp {
+        group {{ group_name }} {
+          replace:
+          neighbor {{ session.ipv6.peer_ip }} {
+            description "AS{{ session.peer_asn }} {{ session.name }}";
+            peer-as {{ session.peer_asn }};
+          }
+        }
+      }
+    }
+  }
+}
+{% endif %}
 {# for session in vrf_sessions.sessions #}
 {% endfor %}
 
