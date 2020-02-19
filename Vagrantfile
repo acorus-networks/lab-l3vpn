@@ -52,7 +52,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         vqfxpfe.vm.synced_folder '.', '/vagrant', disabled: true
         vqfxpfe.vm.network 'private_network', auto_config: false, nic_type: '82540EM', virtualbox__intnet: "#{UUID}_vqfx_internal_1"
 
-        In case you have limited resources, you can limit the CPU used per vqfx-pfe VM, usually 50% is good
+        # In case you have limited resources, you can limit the CPU used per vqfx-pfe VM, usually 50% is good
         vqfxpfe.vm.provider "virtualbox" do |v|
            v.customize ["modifyvm", :id, "--cpuexecutioncap", "50"]
         end
@@ -94,7 +94,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         vqfxpfe.vm.synced_folder '.', '/vagrant', disabled: true
         vqfxpfe.vm.network 'private_network', auto_config: false, nic_type: '82540EM', virtualbox__intnet: "#{UUID}_vqfx_internal_2"
 
-        In case you have limited resources, you can limit the CPU used per vqfx-pfe VM, usually 50% is good
+        # In case you have limited resources, you can limit the CPU used per vqfx-pfe VM, usually 50% is good
         vqfxpfe.vm.provider "virtualbox" do |v|
            v.customize ["modifyvm", :id, "--cpuexecutioncap", "50"]
         end
@@ -136,7 +136,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         vqfxpfe.vm.synced_folder '.', '/vagrant', disabled: true
         vqfxpfe.vm.network 'private_network', auto_config: false, nic_type: '82540EM', virtualbox__intnet: "#{UUID}_vqfx_internal_3"
 
-        In case you have limited resources, you can limit the CPU used per vqfx-pfe VM, usually 50% is good
+        # In case you have limited resources, you can limit the CPU used per vqfx-pfe VM, usually 50% is good
         vqfxpfe.vm.provider "virtualbox" do |v|
            v.customize ["modifyvm", :id, "--cpuexecutioncap", "50"]
         end
