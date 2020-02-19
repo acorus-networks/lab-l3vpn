@@ -21,7 +21,7 @@ protocol kernel {
   learn;           # Allow other daemons to learn about routes from the kernel routing table
   merge paths 8;
   export filter {
-    krt_prefsrc = {{ loopback.ipv4.ip }};
+    krt_prefsrc = {{ loopback.ipv6.ip }};
     accept;
   };
 }
@@ -31,7 +31,7 @@ protocol device {
   scan time 20;    # Scan interfaces every 5 seconds
 }
 
-{% for session in bgp.sessions.ipv4 %}
+{% for session in bgp.sessions.ipv6 %}
 
 protocol bgp session{{ loop.index }} {
   local as {{ bgp.asn }};
