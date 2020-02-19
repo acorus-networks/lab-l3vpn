@@ -1,19 +1,19 @@
 #jinja2: lstrip_blocks: "True", trim_blocks: "True"
 
-{% if l3vpn_lsp is defined -%}
+{%- if l3vpn_lsp is defined -%}
 {% for lsp in l3vpn_lsp %}
 
-{% if lsp.device is not inventory_hostname %}
+{% if lsp.device != inventory_hostname %}
 protocols mpls {
     replace:
-    label-switched-path {{ inventory_hostname }}-{{ peer_device }} {
-        to {{ hostvars[peer_device]['my_loopback'] }};
+    label-switched-path {{ inventory_hostname }}-{{ lsp.device }} {
+        to {{ hostvars[lsp.device]['my_loopback'] }};
     }
 }
-{# if lsp.device is not inventory_hostname #}
+{# if device != inventory_hostname #}
 {% endif %}
 
 {# for lsp in l3vpn_lsp #}
 {% endfor %}
-{# endif l3vpn_lsp is defined #}
-{%- endif %}
+{# endif l3vpn_lsp is defined and inventory_hostname in l3vpn_lsp #}
+{%- endif -%}

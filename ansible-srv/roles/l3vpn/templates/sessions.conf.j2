@@ -26,14 +26,15 @@ routing-instances {
 }
 {% for session in vrf_sessions.sessions %}
 routing-instances {
-  {{ session.vrf }} {
+  {{ vrf_sessions.vrf }} {
     protocols {
       bgp {
         group {{ group_name }} {
           replace:
-        neighbor {{ session.ipv4.peer_ip }} {
-            description "AS{{ session.peer_asn }} {{ peer_name }}";
+          neighbor {{ session.ipv4.peer_ip }} {
+            description "AS{{ session.peer_asn }} {{ session.name }}";
             peer-as {{ session.peer_asn }};
+          }
         }
       }
     }
