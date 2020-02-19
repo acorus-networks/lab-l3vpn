@@ -1,34 +1,31 @@
 #jinja2: lstrip_blocks: "True", trim_blocks: "True"
 
-{% if l3vpn_connectors is defined %}
-{% for name,connectors in l3vpn_connectors.items() %}
+{% if l3vpn_vrf_local is defined %}
+{% for vrf_name in l3vpn_vrf_local %}
+
+{% set data_vrf = l3vpn_all_vrf[vrf_name] %}
 
 replace:
-routing-instances {{ name|lower }} {
+routing-instances {{ data_vrf.slug }} {
     instance-type vrf;
-    {% if connectors is defined %}
-    {% for connector in connectors %}
-    interface {{ connector.interface }};
-    {% endfor %}
-    {% endif %}
-    vrf-import {{ name|lower }}-in;
-    vrf-export {{ name|lower }}-out;
-    route-distinguisher {{ l3vpn_general.rd }}:{{ l3vpn_instances[name].id }};
-    vrf-target target:{{ l3vpn_general.target }}:{{ l3vpn_instances[name].id }};
+    vrf-import {{ data_vrf.slug }}-in;
+    vrf-export {{ data_vrf.slug }}-out;
+    route-distinguisher {{ data_vrf.rd }};
+    vrf-target target:{{ data_vrf.target }};
 }
 
 policy-options {
     replace:
-    community {{ name|upper }} members target:{{ l3vpn_general.target }}:{{ l3vpn_instances[name].id }};
+    community {{ data_vrf.slug|upper }} members target:{{ data_vrf.target }};
 }
 
 policy-options {
     replace:
-    policy-statement {{ name|lower }}-in {
+    policy-statement {{ data_vrf.slug }}-in {
         term bgp {
             from {
                 protocol bgp;
-                community {{ name|upper }};
+                community {{ data_vrf.slug|upper }};
             }
             then accept;
         }
@@ -38,13 +35,13 @@ policy-options {
 
 policy-options {
     replace:
-    policy-statement {{ name|lower }}-out {
+    policy-statement {{ data_vrf.slug }}-out {
         term bgp {
             from {
                 protocol bgp;
             }
             then {
-                community add {{ name|upper }};
+                community add {{ data_vrf.slug|upper }};
                 accept;
             }
         }
@@ -52,10 +49,10 @@ policy-options {
     }
 }
 
-{# for connector in l3vpn_connectors #}
+{# for vrf_name in l3vpn_vrf_local #}
 {% endfor %}
 
-{# endif l3vpn_connectors is defined #}
+{# endif l3vpn_vrf_local is defined #}
 {% endif %}
 
 
