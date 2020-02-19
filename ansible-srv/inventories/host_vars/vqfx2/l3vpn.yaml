@@ -1,14 +1,37 @@
 ---
 
-l3vpn_connectors:
-  'vpn-aws-cust-1':
-    - interface: xe-0/0/2
+l3vpn_vrf_local:
+  - 'vpn-aws-cust-1'
 
+customer_interfaces:
+- asn: 30002
+  cid: xx-multi-01
+  interface: xe-0/0/2
+  name: Customer 2
+  patch_panel: PP-XX
+  slug: customer-2
+  speed: 10G
+  type: customer-multi
+  vlans:
+  - id: 0
+    ipv4:
+      local_ip: 100.64.2.0
+      netmask: 31
+      peer_ip: 100.64.2.1
+    ipv6:
+      local_ip: 3000:2::0
+      netmask: 127
+      peer_ip: 3000:2::1
+    vrf: vpn-aws-cust-1
+
+# Voir ou on le stock (acnet)
 l3vpn_sessions:
 - vrf: vpn-aws-cust-1
   sessions:
-  - name: AWS
-    slug: aws
+  - name: Customer 2
+    slug: customer-2
     peer_asn: 30002
     ipv4:
       peer_ip: 100.64.2.1
+    ipv6:
+      peer_ip: 3000:2::1
