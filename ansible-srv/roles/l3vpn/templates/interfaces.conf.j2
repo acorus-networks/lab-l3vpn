@@ -23,7 +23,7 @@ interfaces {
     unit {{ vlan.id }} {
 
       {%+ if vlan.id != 0 -%}vlan-id {{ vlan.id }};{% endif %}
-      description "Cust-vrf: {{ interface.name }} - {% if vlan.ipv4.peer_ip is defined %} {{ vlan.ipv4.peer_ip }}{% endif %}{% if vlan.ipv6.peer_ip is defined %} {{ vlan.ipv6.peer_ip }}{% endif %}"
+      description "Cust-vrf: {{ interface.name }}{% if vlan.ipv4.peer_ip is defined %} - {{ vlan.ipv4.peer_ip }}{% endif %}{% if vlan.ipv6.peer_ip is defined %} - {{ vlan.ipv6.peer_ip }}{% endif %}"
 
       {% if vlan.ipv4 is defined %}
       family inet {
