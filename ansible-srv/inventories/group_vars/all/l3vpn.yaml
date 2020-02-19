@@ -11,7 +11,7 @@ l3vpn_lsp:
   - device: vqfx2
 
 l3vpn_instances:
-  'aws-cust-1':
+  'vpn-aws-cust-1':
     name: AWS Customer 1
     slug: aws-cust-1
     id: 1

@@ -4,31 +4,31 @@
 {% for name,connectors in l3vpn_connectors.items() %}
 
 replace:
-routing-instances vpn-{{ name|lower }} {
+routing-instances {{ name|lower }} {
     instance-type vrf;
     {% if connectors is defined %}
     {% for connector in connectors %}
     interface {{ connector.interface }};
     {% endfor %}
     {% endif %}
-    vrf-import vpn-{{ name|lower }}-in;
-    vrf-export vpn-{{ name|lower }}-out;
+    vrf-import {{ name|lower }}-in;
+    vrf-export {{ name|lower }}-out;
     route-distinguisher {{ l3vpn_general.rd }}:{{ l3vpn_instances[name].id }};
     vrf-target target:{{ l3vpn_general.target }}:{{ l3vpn_instances[name].id }};
 }
 
 policy-options {
     replace:
-    community VPN-{{ name|upper }} members target:{{ l3vpn_general.target }}:{{ l3vpn_instances[name].id }};
+    community {{ name|upper }} members target:{{ l3vpn_general.target }}:{{ l3vpn_instances[name].id }};
 }
 
 policy-options {
     replace:
-    policy-statement vpn-{{ name|lower }}-in {
+    policy-statement {{ name|lower }}-in {
         term bgp {
             from {
                 protocol bgp;
-                community VPN-{{ name|upper }};
+                community {{ name|upper }};
             }
             then accept;
         }
@@ -38,13 +38,13 @@ policy-options {
 
 policy-options {
     replace:
-    policy-statement vpn-{{ name|lower }}-out {
+    policy-statement {{ name|lower }}-out {
         term bgp {
             from {
                 protocol bgp;
             }
             then {
-                community add VPN-{{ name|upper }};
+                community add {{ name|upper }};
                 accept;
             }
         }
