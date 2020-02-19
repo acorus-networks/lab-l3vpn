@@ -52,10 +52,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         vqfxpfe.vm.synced_folder '.', '/vagrant', disabled: true
         vqfxpfe.vm.network 'private_network', auto_config: false, nic_type: '82540EM', virtualbox__intnet: "#{UUID}_vqfx_internal_1"
 
-        # In case you have limited resources, you can limit the CPU used per vqfx-pfe VM, usually 50% is good
-        # vqfxpfe.vm.provider "virtualbox" do |v|
-        #    v.customize ["modifyvm", :id, "--cpuexecutioncap", "50"]
-        # end
+        In case you have limited resources, you can limit the CPU used per vqfx-pfe VM, usually 50% is good
+        vqfxpfe.vm.provider "virtualbox" do |v|
+           v.customize ["modifyvm", :id, "--cpuexecutioncap", "50"]
+        end
     end
 
     config.vm.define "vqfx1" do |vqfx|
@@ -94,10 +94,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         vqfxpfe.vm.synced_folder '.', '/vagrant', disabled: true
         vqfxpfe.vm.network 'private_network', auto_config: false, nic_type: '82540EM', virtualbox__intnet: "#{UUID}_vqfx_internal_2"
 
-        # In case you have limited resources, you can limit the CPU used per vqfx-pfe VM, usually 50% is good
-        # vqfxpfe.vm.provider "virtualbox" do |v|
-        #    v.customize ["modifyvm", :id, "--cpuexecutioncap", "50"]
-        # end
+        In case you have limited resources, you can limit the CPU used per vqfx-pfe VM, usually 50% is good
+        vqfxpfe.vm.provider "virtualbox" do |v|
+           v.customize ["modifyvm", :id, "--cpuexecutioncap", "50"]
+        end
     end
 
     config.vm.define "vqfx2" do |vqfx|
@@ -136,10 +136,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         vqfxpfe.vm.synced_folder '.', '/vagrant', disabled: true
         vqfxpfe.vm.network 'private_network', auto_config: false, nic_type: '82540EM', virtualbox__intnet: "#{UUID}_vqfx_internal_3"
 
-        # In case you have limited resources, you can limit the CPU used per vqfx-pfe VM, usually 50% is good
-        # vqfxpfe.vm.provider "virtualbox" do |v|
-        #    v.customize ["modifyvm", :id, "--cpuexecutioncap", "50"]
-        # end
+        In case you have limited resources, you can limit the CPU used per vqfx-pfe VM, usually 50% is good
+        vqfxpfe.vm.provider "virtualbox" do |v|
+           v.customize ["modifyvm", :id, "--cpuexecutioncap", "50"]
+        end
     end
 
     config.vm.define "vqfx3" do |vqfx|
@@ -187,7 +187,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         # eth1
         cust.vm.network 'private_network', ip: "192.168.100.11", netmask: "24", virtualbox__intnet: "#{UUID}_seg61"
         # eth2
-        cust.vm.network 'private_network', ip: "100.64.1.1", netmask: "31", virtualbox__intnet: "#{UUID}_seg3"
+        #cust.vm.network 'private_network', ip: "100.64.1.1", netmask: "31", virtualbox__intnet: "#{UUID}_seg3"
+        cust.vm.network 'private_network', virtualbox__intnet: "#{UUID}_seg3"
         cust.vm.boot_timeout = 1200
         cust.ssh.insert_key = true
     end
@@ -200,7 +201,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         # eth1
         cust.vm.network 'private_network', ip: "192.168.100.12", netmask: "24", virtualbox__intnet: "#{UUID}_seg61"
         # eth2
-        cust.vm.network 'private_network', ip: "100.64.2.1", netmask: "31", virtualbox__intnet: "#{UUID}_seg13"
+        #cust.vm.network 'private_network', ip: "100.64.2.1", netmask: "31", virtualbox__intnet: "#{UUID}_seg13"
+        cust.vm.network 'private_network', virtualbox__intnet: "#{UUID}_seg13"
         cust.vm.boot_timeout = 1200
         cust.ssh.insert_key = true
     end
@@ -213,7 +215,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         # eth1 
         cust.vm.network 'private_network', ip: "192.168.100.13", netmask: "24", virtualbox__intnet: "#{UUID}_seg61"
         # eth2
-        cust.vm.network 'private_network', ip: "100.64.3.1", netmask: "31", virtualbox__intnet: "#{UUID}_seg23"
+        cust.vm.network 'private_network', virtualbox__intnet: "#{UUID}_seg23"
         cust.vm.boot_timeout = 1200
         cust.ssh.insert_key = true
     end
