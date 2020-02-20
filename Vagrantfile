@@ -21,7 +21,7 @@ UUID = "OGVIFL"
 # seg21: vqfx3:xe-0/0/0 -> seg12
 # seg22: vqfx3:xe-0/0/1 -> seg2
 # seg23: vqfx3:xe-0/0/2 -> seg23
-# seg24: vqfx3:xe-0/0/3
+# seg24: vqfx3:xe-0/0/3 -> seg24 
 # seg25: vqfx3:xe-0/0/4 -> seg61
 ##
 # seg31: cust1:eth0 -> seg61
@@ -32,6 +32,9 @@ UUID = "OGVIFL"
 ##
 # seg51: cust3:eth0 -> seg61
 # seg52: cust3:eth1 -> seg23
+##
+# seg51: cust4:eth0 -> seg61
+# seg52: cust4:eth1 -> seg24
 ##
 # seg61: srv:eth0 -> seg61
 
@@ -176,7 +179,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         # eth0 
         srv.vm.network 'private_network', ip: "192.168.100.10", netmask: "24", virtualbox__intnet: "#{UUID}_seg61"
         srv.vm.boot_timeout = 1200
-        srv.ssh.insert_key = true
+        #srv.ssh.insert_key = true
+        srv.ssh.insert_key = false
     end
 
     ### Cust1 : 
@@ -187,8 +191,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         # eth1
         cust.vm.network 'private_network', ip: "192.168.100.11", netmask: "24", virtualbox__intnet: "#{UUID}_seg61"
         # eth2
-        #cust.vm.network 'private_network', ip: "100.64.1.1", netmask: "31", virtualbox__intnet: "#{UUID}_seg3"
-        cust.vm.network 'private_network', virtualbox__intnet: "#{UUID}_seg3"
+        cust.vm.network 'private_network', auto_config: false, virtualbox__intnet: "#{UUID}_seg3"
         cust.vm.boot_timeout = 1200
         cust.ssh.insert_key = true
     end
@@ -201,8 +204,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         # eth1
         cust.vm.network 'private_network', ip: "192.168.100.12", netmask: "24", virtualbox__intnet: "#{UUID}_seg61"
         # eth2
-        #cust.vm.network 'private_network', ip: "100.64.2.1", netmask: "31", virtualbox__intnet: "#{UUID}_seg13"
-        cust.vm.network 'private_network', virtualbox__intnet: "#{UUID}_seg13"
+        cust.vm.network 'private_network', auto_config: false, virtualbox__intnet: "#{UUID}_seg13"
         cust.vm.boot_timeout = 1200
         cust.ssh.insert_key = true
     end
@@ -215,11 +217,23 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         # eth1 
         cust.vm.network 'private_network', ip: "192.168.100.13", netmask: "24", virtualbox__intnet: "#{UUID}_seg61"
         # eth2
-        cust.vm.network 'private_network', virtualbox__intnet: "#{UUID}_seg23"
+        cust.vm.network 'private_network', auto_config: false, virtualbox__intnet: "#{UUID}_seg23"
         cust.vm.boot_timeout = 1200
         cust.ssh.insert_key = true
     end
 
+    ### Cust4 : 
+    ###########
+    config.vm.define "cust4" do |cust|
+        cust.vm.box = "debian/buster64"
+        cust.vm.hostname = "cust4"
+        # eth1 
+        cust.vm.network 'private_network', ip: "192.168.100.14", netmask: "24", virtualbox__intnet: "#{UUID}_seg61"
+        # eth2
+        cust.vm.network 'private_network', auto_config: false, virtualbox__intnet: "#{UUID}_seg24"
+        cust.vm.boot_timeout = 1200
+        cust.ssh.insert_key = true
+    end
 
 
     ##############################
