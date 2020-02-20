@@ -26,3 +26,13 @@ igp:
         local_ip: 10.0.0.7
         netmask: 31
         peer_ip: 10.0.0.6
+  - interface: xe-0/0/3
+    peer: vqfx3
+    speed: 10G
+    type: local-core
+    vlans:
+    - id: 0
+      ipv4:
+        local_ip: 10.0.0.8
+        netmask: 31
+        peer_ip: 10.0.0.9
