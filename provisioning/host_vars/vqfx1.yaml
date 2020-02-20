@@ -11,5 +11,5 @@ interfaces:
       peer: vqfx3
     - name: xe-0/0/4
       peer: Management server
-      ip: 192.168.100.20
+      ip: 192.168.100.21
       netmask: 24

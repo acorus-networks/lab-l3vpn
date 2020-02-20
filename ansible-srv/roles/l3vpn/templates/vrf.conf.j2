@@ -5,13 +5,16 @@
 
 {% set data_vrf = l3vpn_all_vrf[vrf_name] %}
 
-replace:
-routing-instances {{ data_vrf.slug }} {
-    instance-type vrf;
-    vrf-import {{ data_vrf.slug }}-in;
-    vrf-export {{ data_vrf.slug }}-out;
-    route-distinguisher {{ data_vrf.rd }};
-    vrf-target target:{{ data_vrf.target }};
+
+routing-instances {
+    replace:
+    {{ data_vrf.slug }} {
+        instance-type vrf;
+        vrf-import {{ data_vrf.slug }}-in;
+        vrf-export {{ data_vrf.slug }}-out;
+        route-distinguisher {{ data_vrf.rd }};
+        vrf-target target:{{ data_vrf.target }};
+    }
 }
 
 policy-options {
