@@ -13,7 +13,7 @@ routing-instances {
         vrf-import {{ data_vrf.slug }}-in;
         vrf-export {{ data_vrf.slug }}-out;
         route-distinguisher {{ data_vrf.rd }};
-        vrf-target target:{{ data_vrf.target }};
+        {# vrf-target target:{{ data_vrf.target }}; #}
     }
 }
 
