@@ -15,9 +15,5 @@ l3vpn_all_vrf:
     rd: "65500:2"
     target: "65000:2"
 
-# A voir si besoin
-l3vpn_lsp:
-  - device: vqfx1
-  - device: vqfx2
 
 
