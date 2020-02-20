@@ -271,7 +271,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     if !Vagrant::Util::Platform.windows?
         config.vm.provision "ansible" do |ansible|
             ansible.groups = {
-                "cust" => ["cust1", "cust2", "cust3"]
+                "cust" => ["cust1", "cust2", "cust3", "cust4"]
             }
             ansible.playbook = "provisioning/deploy-cust.yaml"
         end
