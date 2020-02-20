@@ -39,16 +39,17 @@ groups {
 
 protocols {
 
-  replace:
+{#   replace:
   rsvp {
     load-balance bandwidth;
-  }
+  } #}
 
   replace:
   mpls {
     apply-groups lsp-default;
     path-mtu allow-fragmentation;
-    path-mtu rsvp mtu-signaling;
+{#     path-mtu rsvp mtu-signaling;
+ #}    
     statistics file mpls-stats;
     optimize-aggressive;
   }
@@ -63,7 +64,7 @@ protocols {
 
 
 
-{% if igp.loopbacks is defined %}
+{# {% if igp.loopbacks is defined %}
 {% for loopback in igp.loopbacks %}
 {% if loopback.vrf is not defined %}
 protocols {
@@ -76,12 +77,9 @@ protocols {
     interface lo0.{{ loopback.vlan }} apply-groups ldp-interface;
   }
 }
-{# Endif loopback.vrf is not defined (inet0) #}
 {% endif %}
-{# Endfor loopback in igp.loopbacks #}
 {% endfor %}
-{# Endif igp.loopbacks is defined #}
-{% endif %}
+{% endif %} #}
 
 
 {% if igp.neighbors is defined %}
@@ -95,9 +93,9 @@ protocols {
 
 protocols {
 
-  rsvp {
+{#   rsvp {
     interface {{ neighbor.interface }}.{{ id }} aggregate;
-  }
+  } #}
 
   mpls {
     interface {{ neighbor.interface }}.{{ id }};

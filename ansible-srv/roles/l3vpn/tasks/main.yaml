@@ -4,21 +4,11 @@
 - name: Create host specific configuration directory
   file: path=~/configs/{{ ansible_host }} state=directory
 
-- file: path=~/configs/{{ ansible_host }}/01_mpls_lsp.conf.part state=absent
 - file: path=~/configs/{{ ansible_host }}/02_vrf.conf.part state=absent
 - file: path=~/configs/{{ ansible_host }}/03_sessions.conf.part state=absent
 - file: path=~/configs/{{ ansible_host }}/04_sessions.conf.part state=absent
 - file: path=~/configs/{{ ansible_host }}/{{ ansible_host }}.conf state=absent
 
-
-- name: LSP
-  template:
-    src={{ item }}.j2
-    dest=~/configs/{{ ansible_host }}/01_{{ item }}.part
-  tags:
-    - l3vpn
-  with_items:
-    - mpls_lsp.conf
 
 - name: VRF L3VPN Configuration
   template:
