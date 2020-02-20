@@ -127,6 +127,48 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
         # Dataplane ports
         # xe-0/0/0
+        vqfx.vm.network 'private_network', auto_config: false, nic_type: '82540EM', virtualbox__intnet: "#{UUID}_seg1"
+        # xe-0/0/1
+        vqfx.vm.network 'private_network', auto_config: false, nic_type: '82540EM', virtualbox__intnet: "#{UUID}_seg12"
+        # xe-0/0/2
+        vqfx.vm.network 'private_network', auto_config: false, nic_type: '82540EM', virtualbox__intnet: "#{UUID}_seg13"
+        # xe-0/0/3
+        vqfx.vm.network 'private_network', auto_config: false, nic_type: '82540EM', virtualbox__intnet: "#{UUID}_seg14"
+        # xe-0/0/4
+        vqfx.vm.network 'private_network', auto_config: false, nic_type: '82540EM', virtualbox__intnet: "#{UUID}_seg61"
+    end
+
+    ### VQFX3 : 
+    ###########
+    config.vm.define "pfe3" do |vqfxpfe|
+        vqfxpfe.ssh.insert_key = false
+        vqfxpfe.vm.box = 'juniper/vqfx10k-pfe'
+        vqfxpfe.vm.boot_timeout = 1200
+
+        # DO NOT REMOVE / NO VMtools installed
+        vqfxpfe.vm.synced_folder '.', '/vagrant', disabled: true
+        vqfxpfe.vm.network 'private_network', auto_config: false, nic_type: '82540EM', virtualbox__intnet: "#{UUID}_vqfx_internal_3"
+
+        # In case you have limited resources, you can limit the CPU used per vqfx-pfe VM, usually 50% is good
+        vqfxpfe.vm.provider "virtualbox" do |v|
+           v.customize ["modifyvm", :id, "--cpuexecutioncap", "50"]
+        end
+    end
+
+    config.vm.define "vqfx3" do |vqfx|
+        vqfx.vm.hostname = "vqfx3"
+        vqfx.vm.box = 'juniper/vqfx10k-re'
+        vqfx.vm.boot_timeout = 1200
+
+        # DO NOT REMOVE / NO VMtools installed
+        vqfx.vm.synced_folder '.', '/vagrant', disabled: true
+
+        # Management port
+        vqfx.vm.network 'private_network', auto_config: false, nic_type: '82540EM', virtualbox__intnet: "#{UUID}_vqfx_internal_3"
+        vqfx.vm.network 'private_network', auto_config: false, nic_type: '82540EM', virtualbox__intnet: "#{UUID}_reserved-bridge"
+
+        # Dataplane ports
+        # xe-0/0/0
         vqfx.vm.network 'private_network', auto_config: false, nic_type: '82540EM', virtualbox__intnet: "#{UUID}_seg21"
         # xe-0/0/1
         vqfx.vm.network 'private_network', auto_config: false, nic_type: '82540EM', virtualbox__intnet: "#{UUID}_seg12"
@@ -138,9 +180,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         vqfx.vm.network 'private_network', auto_config: false, nic_type: '82540EM', virtualbox__intnet: "#{UUID}_seg61"
     end
 
-    ### VQFX3 : 
+    ### VQFX4 : 
     ###########
-    config.vm.define "pfe3" do |vqfxpfe|
+    config.vm.define "pfe4" do |vqfxpfe|
         vqfxpfe.ssh.insert_key = false
         vqfxpfe.vm.box = 'juniper/vqfx10k-pfe'
         vqfxpfe.vm.boot_timeout = 1200
@@ -155,8 +197,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         end
     end
 
-    config.vm.define "vqfx3" do |vqfx|
-        vqfx.vm.hostname = "vqfx3"
+    config.vm.define "vqfx4" do |vqfx|
+        vqfx.vm.hostname = "vqfx4"
         vqfx.vm.box = 'juniper/vqfx10k-re'
         vqfx.vm.boot_timeout = 1200
 
