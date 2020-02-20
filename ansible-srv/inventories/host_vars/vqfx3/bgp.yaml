@@ -7,3 +7,5 @@ peers:
     ipv4: 10.200.0.1
   - name: vqfx2
     ipv4: 10.200.0.2
+  - name: vqfx4
+    ipv4: 10.200.0.4

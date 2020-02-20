@@ -6,46 +6,36 @@ VAGRANTFILE_API_VERSION = "2"
 UUID = "OGVIFL"
 
 ### LINKs and Segment
-## VQFX 1
 # seg1: vqfx1:xe-0/0/0 -> seg1
-# seg2: vqfx1:xe-0/0/1 -> seg32
+# seg2: vqfx1:xe-0/0/1 -> seg2
 # seg3: vqfx1:xe-0/0/2 -> seg3
-# seg4: vqfx1:xe-0/0/3 -> seg4
+# seg4: vqfx1:xe-0/0/3
 # seg5: vqfx1:xe-0/0/4 -> seg61
-## VQFX 2
+##
 # seg11: vqfx2:xe-0/0/0 -> seg1
 # seg12: vqfx2:xe-0/0/1 -> seg12
 # seg13: vqfx2:xe-0/0/2 -> seg13
-# seg14: vqfx2:xe-0/0/3 -> seg14
+# seg14: vqfx2:xe-0/0/3
 # seg15: vqfx2:xe-0/0/4 -> seg61
-## VQFX 3
-# seg21: vqfx3:xe-0/0/0 -> seg21
-# seg22: vqfx3:xe-0/0/1 -> seg12
+##
+# seg21: vqfx3:xe-0/0/0 -> seg12
+# seg22: vqfx3:xe-0/0/1 -> seg2
 # seg23: vqfx3:xe-0/0/2 -> seg23
-# seg24: vqfx3:xe-0/0/3 -> seg4 
+# seg24: vqfx3:xe-0/0/3 -> seg24
 # seg25: vqfx3:xe-0/0/4 -> seg61
-## VQFX 4
-# seg31: vqfx4:xe-0/0/0 -> seg21
-# seg32: vqfx4:xe-0/0/1 -> seg32
-# seg33: vqfx4:xe-0/0/2 -> seg33
-# seg34: vqfx4:xe-0/0/3 -> seg34
-# seg35: vqfx4:xe-0/0/4 -> seg61
-## Cust 1
-# seg41: cust1:eth0 -> seg61
-# seg42: cust1:eth1 -> seg3
-## Cust 2
-# seg51: cust2:eth0 -> seg61
-# seg52: cust2:eth1 -> seg13
-## Cust 3
-# seg61: cust3:eth0 -> seg61
-# seg62: cust3:eth1 -> seg23
-## Cust 4
-# seg71: cust3:eth0 -> seg61
-# seg72: cust3:eth1 -> seg33
-## Cust 5
-# seg81: cust4:eth0 -> seg61
-# seg82: cust4:eth1 -> seg34
-## Management server
+##
+# seg31: cust1:eth0 -> seg61
+# seg32: cust1:eth1 -> seg3
+##
+# seg41: cust2:eth0 -> seg61
+# seg42: cust2:eth1 -> seg13
+##
+# seg51: cust3:eth0 -> seg61
+# seg52: cust3:eth1 -> seg23
+##
+# seg51: cust4:eth0 -> seg61
+# seg52: cust4:eth1 -> seg24
+##
 # seg61: srv:eth0 -> seg61
 
 
@@ -54,7 +44,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     config.ssh.insert_key = false
 
-    ### VQFX1 : 
+    ### VQFX1 :
     ###########
     config.vm.define "pfe1" do |vqfxpfe|
         vqfxpfe.ssh.insert_key = false
@@ -87,7 +77,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         # xe-0/0/0
         vqfx.vm.network 'private_network', auto_config: false, nic_type: '82540EM', virtualbox__intnet: "#{UUID}_seg1"
         # xe-0/0/1
-        vqfx.vm.network 'private_network', auto_config: false, nic_type: '82540EM', virtualbox__intnet: "#{UUID}_seg32"
+        vqfx.vm.network 'private_network', auto_config: false, nic_type: '82540EM', virtualbox__intnet: "#{UUID}_seg2"
         # xe-0/0/2
         vqfx.vm.network 'private_network', auto_config: false, nic_type: '82540EM', virtualbox__intnet: "#{UUID}_seg3"
         # xe-0/0/3
@@ -96,7 +86,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         vqfx.vm.network 'private_network', auto_config: false, nic_type: '82540EM', virtualbox__intnet: "#{UUID}_seg61"
     end
 
-    ### VQFX2 : 
+    ### VQFX2 :
     ###########
     config.vm.define "pfe2" do |vqfxpfe|
         vqfxpfe.ssh.insert_key = false
@@ -127,18 +117,18 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
         # Dataplane ports
         # xe-0/0/0
-        vqfx.vm.network 'private_network', auto_config: false, nic_type: '82540EM', virtualbox__intnet: "#{UUID}_seg21"
+        vqfx.vm.network 'private_network', auto_config: false, nic_type: '82540EM', virtualbox__intnet: "#{UUID}_seg1"
         # xe-0/0/1
         vqfx.vm.network 'private_network', auto_config: false, nic_type: '82540EM', virtualbox__intnet: "#{UUID}_seg12"
         # xe-0/0/2
-        vqfx.vm.network 'private_network', auto_config: false, nic_type: '82540EM', virtualbox__intnet: "#{UUID}_seg23"
+        vqfx.vm.network 'private_network', auto_config: false, nic_type: '82540EM', virtualbox__intnet: "#{UUID}_seg13"
         # xe-0/0/3
-        vqfx.vm.network 'private_network', auto_config: false, nic_type: '82540EM', virtualbox__intnet: "#{UUID}_seg4"
+        vqfx.vm.network 'private_network', auto_config: false, nic_type: '82540EM', virtualbox__intnet: "#{UUID}_seg14"
         # xe-0/0/4
         vqfx.vm.network 'private_network', auto_config: false, nic_type: '82540EM', virtualbox__intnet: "#{UUID}_seg61"
     end
 
-    ### VQFX3 : 
+    ### VQFX3 :
     ###########
     config.vm.define "pfe3" do |vqfxpfe|
         vqfxpfe.ssh.insert_key = false
@@ -147,7 +137,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
         # DO NOT REMOVE / NO VMtools installed
         vqfxpfe.vm.synced_folder '.', '/vagrant', disabled: true
-        vqfxpfe.vm.network 'private_network', auto_config: false, nic_type: '82540EM', virtualbox__intnet: "#{UUID}_vqfx_internal_4"
+        vqfxpfe.vm.network 'private_network', auto_config: false, nic_type: '82540EM', virtualbox__intnet: "#{UUID}_vqfx_internal_3"
 
         # In case you have limited resources, you can limit the CPU used per vqfx-pfe VM, usually 50% is good
         vqfxpfe.vm.provider "virtualbox" do |v|
@@ -164,14 +154,14 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         vqfx.vm.synced_folder '.', '/vagrant', disabled: true
 
         # Management port
-        vqfx.vm.network 'private_network', auto_config: false, nic_type: '82540EM', virtualbox__intnet: "#{UUID}_vqfx_internal_4"
+        vqfx.vm.network 'private_network', auto_config: false, nic_type: '82540EM', virtualbox__intnet: "#{UUID}_vqfx_internal_3"
         vqfx.vm.network 'private_network', auto_config: false, nic_type: '82540EM', virtualbox__intnet: "#{UUID}_reserved-bridge"
 
         # Dataplane ports
         # xe-0/0/0
-        vqfx.vm.network 'private_network', auto_config: false, nic_type: '82540EM', virtualbox__intnet: "#{UUID}_seg21"
+        vqfx.vm.network 'private_network', auto_config: false, nic_type: '82540EM', virtualbox__intnet: "#{UUID}_seg12"
         # xe-0/0/1
-        vqfx.vm.network 'private_network', auto_config: false, nic_type: '82540EM', virtualbox__intnet: "#{UUID}_seg32"
+        vqfx.vm.network 'private_network', auto_config: false, nic_type: '82540EM', virtualbox__intnet: "#{UUID}_seg2"
         # xe-0/0/2
         vqfx.vm.network 'private_network', auto_config: false, nic_type: '82540EM', virtualbox__intnet: "#{UUID}_seg33"
         # xe-0/0/3
@@ -180,7 +170,20 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         vqfx.vm.network 'private_network', auto_config: false, nic_type: '82540EM', virtualbox__intnet: "#{UUID}_seg61"
     end
 
-    ### Cust1 : 
+    ##########################
+    ## Server          #######
+    ##########################
+    config.vm.define "srv" do |srv|
+        srv.vm.box = "ubuntu/xenial64"
+        srv.vm.hostname = "server"
+        # eth0
+        srv.vm.network 'private_network', ip: "192.168.100.10", netmask: "24", virtualbox__intnet: "#{UUID}_seg61"
+        srv.vm.boot_timeout = 1200
+        #srv.ssh.insert_key = true
+        srv.ssh.insert_key = false
+    end
+
+    ### Cust1 :
     ###########
     config.vm.define "cust1" do |cust|
         cust.vm.box = "debian/buster64"
@@ -193,7 +196,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         cust.ssh.insert_key = true
     end
 
-    ### Cust2 : 
+    ### Cust2 :
     ###########
     config.vm.define "cust2" do |cust|
         cust.vm.box = "debian/buster64"
@@ -206,12 +209,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         cust.ssh.insert_key = true
     end
 
-    ### Cust3 : 
+    ### Cust3 :
     ###########
     config.vm.define "cust3" do |cust|
         cust.vm.box = "debian/buster64"
         cust.vm.hostname = "cust3"
-        # eth1 
+        # eth1
         cust.vm.network 'private_network', ip: "192.168.100.13", netmask: "24", virtualbox__intnet: "#{UUID}_seg61"
         # eth2
         cust.vm.network 'private_network', auto_config: false, virtualbox__intnet: "#{UUID}_seg23"
@@ -219,43 +222,17 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         cust.ssh.insert_key = true
     end
 
-    ### Cust4 : 
+    ### Cust4 :
     ###########
     config.vm.define "cust4" do |cust|
         cust.vm.box = "debian/buster64"
         cust.vm.hostname = "cust4"
-        # eth1 
+        # eth1
         cust.vm.network 'private_network', ip: "192.168.100.14", netmask: "24", virtualbox__intnet: "#{UUID}_seg61"
         # eth2
-        cust.vm.network 'private_network', auto_config: false, virtualbox__intnet: "#{UUID}_seg33"
+        cust.vm.network 'private_network', auto_config: false, virtualbox__intnet: "#{UUID}_seg24"
         cust.vm.boot_timeout = 1200
         cust.ssh.insert_key = true
-    end
-
-    ### Cust5 : 
-    ###########
-    config.vm.define "cust5" do |cust|
-        cust.vm.box = "debian/buster64"
-        cust.vm.hostname = "cust5"
-        # eth1 
-        cust.vm.network 'private_network', ip: "192.168.100.15", netmask: "24", virtualbox__intnet: "#{UUID}_seg61"
-        # eth2
-        cust.vm.network 'private_network', auto_config: false, virtualbox__intnet: "#{UUID}_seg34"
-        cust.vm.boot_timeout = 1200
-        cust.ssh.insert_key = true
-    end
-
-    ##########################
-    ## Server          #######
-    ##########################
-    config.vm.define "srv" do |srv|
-        srv.vm.box = "ubuntu/xenial64"
-        srv.vm.hostname = "server"
-        # eth0 
-        srv.vm.network 'private_network', ip: "192.168.100.10", netmask: "24", virtualbox__intnet: "#{UUID}_seg61"
-        srv.vm.boot_timeout = 1200
-        #srv.ssh.insert_key = true
-        srv.ssh.insert_key = false
     end
 
 
@@ -294,7 +271,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     if !Vagrant::Util::Platform.windows?
         config.vm.provision "ansible" do |ansible|
             ansible.groups = {
-                "cust" => ["cust1", "cust2", "cust3", "cust4", "cust5"]
+                "cust" => ["cust1", "cust2", "cust3", "cust4"]
             }
             ansible.playbook = "provisioning/deploy-cust.yaml"
         end

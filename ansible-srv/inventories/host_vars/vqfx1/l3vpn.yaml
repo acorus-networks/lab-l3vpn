@@ -1,7 +1,7 @@
 ---
 
 l3vpn_vrf_local:
-  - 'vpn-aws-cust-1'
+  - 'vpn-15'
 
 # Netbox via customer_interfaces
 customer_interfaces:
@@ -23,11 +23,11 @@ customer_interfaces:
       local_ip: 3000:1::0
       netmask: 127
       peer_ip: 3000:1::1
-    vrf: vpn-aws-cust-1
+    vrf: vpn-15
 
 # Voir ou on le stock (acnet? -> manque vrf)
 l3vpn_sessions:
-- vrf: vpn-aws-cust-1
+- vrf: vpn-15
   sessions:
   - name: Customer 1
     slug: customer-1

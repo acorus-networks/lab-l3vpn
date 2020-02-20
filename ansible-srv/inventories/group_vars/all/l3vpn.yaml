@@ -4,14 +4,14 @@ my_asn: 35280
 
 # Netbox via VRF
 l3vpn_all_vrf:
-  'vpn-aws-cust-1':
-    name: VPN AWS Customer 1
-    slug: vpn-aws-cust-1
+  'vpn-15':
+    name: VPN customer 1-5
+    slug: vpn-15
     rd: "65500:1"
     target: "65000:1"
-  'vpn-cust-x':
-    name: VPN Customer x
-    slug: vpn-cust-x
+  'vpn-234':
+    name: VPN customer 2-3-4
+    slug: vpn-234
     rd: "65500:2"
     target: "65000:2"
 

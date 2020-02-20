@@ -1,7 +1,7 @@
 ---
 
 l3vpn_vrf_local:
-  - 'vpn-aws-cust-1'
+  - 'vpn-234'
 
 customer_interfaces:
 - asn: 30002
@@ -22,11 +22,10 @@ customer_interfaces:
       local_ip: 3000:2::0
       netmask: 127
       peer_ip: 3000:2::1
-    vrf: vpn-aws-cust-1
+    vrf: vpn-234
 
-# Voir ou on le stock (acnet)
 l3vpn_sessions:
-- vrf: vpn-aws-cust-1
+- vrf: vpn-234
   sessions:
   - name: Customer 2
     slug: customer-2

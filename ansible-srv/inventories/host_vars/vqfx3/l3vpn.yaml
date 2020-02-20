@@ -1,8 +1,7 @@
 ---
 
 l3vpn_vrf_local:
-  - vpn-cust-x
-  - vpn-aws-cust-1
+  - 'vpn-234'
 
 customer_interfaces:
 - asn: 30003
@@ -23,30 +22,10 @@ customer_interfaces:
       local_ip: 3000:3::0
       netmask: 127
       peer_ip: 3000:3::1
-    vrf: vpn-cust-x
-- asn: 30004
-  cid: xx-multi-01
-  interface: xe-0/0/2
-  name: Customer 4
-  patch_panel: PP-XX
-  slug: customer-4
-  speed: 10G
-  type: customer-multi
-  vlans:
-  - id: 0
-    ipv4:
-      local_ip: 100.64.4.0
-      netmask: 31
-      peer_ip: 100.64.4.1
-    ipv6:
-      local_ip: 3000:4::0
-      netmask: 127
-      peer_ip: 3000:4::1
-    vrf: vpn-aws-cust-1
+    vrf: vpn-234
 
-# Voir ou on le stock (acnet)
 l3vpn_sessions:
-- vrf: vpn-cust-x
+- vrf: vpn-234
   sessions:
   - name: Customer 3
     slug: customer-3
@@ -55,12 +34,3 @@ l3vpn_sessions:
       peer_ip: 100.64.3.1
     ipv6:
       peer_ip: 3000:3::1
-- vrf: vpn-aws-cust-1
-  sessions:
-  - name: Customer 4
-    slug: customer-4
-    peer_asn: 30004
-    ipv4:
-      peer_ip: 100.64.4.1
-    ipv6:
-      peer_ip: 3000:4::1

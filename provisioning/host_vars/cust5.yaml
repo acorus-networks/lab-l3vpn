@@ -1,0 +1,29 @@
+interfaces:
+  - name: eth1
+    ipv4: 
+      ip: 192.168.100.15
+      netmask: 24
+  - name: eth2
+    ipv4: 
+      ip: 100.64.5.1
+      netmask: 31
+    ipv6:
+      ip: 3000:5::1
+      netmask: 127 
+loopback:
+  ipv4: 
+    ip: 5.5.5.5
+    netmask: 24
+  ipv6:
+    ip: "2001:db8:0:4::"
+    netmask: 64
+bgp:
+  id: 5.5.5.5
+  asn: 30005
+  sessions:
+    ipv4:
+      - peer_ip: 100.64.5.0
+        peer_asn: 35280
+    ipv6:
+      - peer_ip: 3000:5::0
+        peer_asn: 35280

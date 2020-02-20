@@ -1,11 +1,11 @@
 ---
 
 my_asn: 35280
-my_loopback: 10.200.0.2
+my_loopback: 10.200.0.4
 peers:
   - name: vqfx1
     ipv4: 10.200.0.1
+  - name: vqfx2
+    ipv4: 10.200.0.2
   - name: vqfx3
     ipv4: 10.200.0.3
-  - name: vqfx4
-    ipv4: 10.200.0.4

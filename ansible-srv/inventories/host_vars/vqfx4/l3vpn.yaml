@@ -1,0 +1,65 @@
+---
+
+l3vpn_vrf_local:
+  - 'vpn-15'
+  - 'vpn-234'
+
+customer_interfaces:
+- asn: 30003
+  cid: xx-multi-01
+  interface: xe-0/0/2
+  name: Customer 4
+  patch_panel: PP-XX
+  slug: customer-4
+  speed: 10G
+  type: customer-multi
+  vlans:
+  - id: 0
+    ipv4:
+      local_ip: 100.64.4.0
+      netmask: 31
+      peer_ip: 100.64.4.1
+    ipv6:
+      local_ip: 3000:4::0
+      netmask: 127
+      peer_ip: 3000:4::1
+    vrf: vpn-234
+- asn: 30005
+  cid: xx-multi-01
+  interface: xe-0/0/3
+  name: Customer 5
+  patch_panel: PP-XX
+  slug: customer-5
+  speed: 10G
+  type: customer-multi
+  vlans:
+  - id: 0
+    ipv4:
+      local_ip: 100.64.5.0
+      netmask: 31
+      peer_ip: 100.64.5.1
+    ipv6:
+      local_ip: 3000:5::0
+      netmask: 127
+      peer_ip: 3000:5::1
+    vrf: vpn-15
+
+l3vpn_sessions:
+- vrf: vpn-234
+  sessions:
+  - name: Customer 4
+    slug: customer-4
+    peer_asn: 30004
+    ipv4:
+      peer_ip: 100.64.4.1
+    ipv6:
+      peer_ip: 3000:4::1
+- vrf: vpn-15
+  sessions:
+  - name: Customer 5
+    slug: customer-5
+    peer_asn: 30005
+    ipv4:
+      peer_ip: 100.64.5.1
+    ipv6:
+      peer_ip: 3000:5::1
