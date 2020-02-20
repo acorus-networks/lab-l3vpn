@@ -1,39 +1,24 @@
 ---
-# tasks file for roles/base
 
-- name: Create host specific configuration directory
-  file: path=~/configs/{{ ansible_host }} state=directory
+- name: Remove the old configuration directory
+  file: 
+    path: ~/configs/{{ ansible_host }} 
+    state: absent
 
-- file: path=~/configs/{{ ansible_host }}/interfaces.conf.part state=absent
-- file: path=~/configs/{{ ansible_host }}/ospf.conf.part state=absent
-- file: path=~/configs/{{ ansible_host }}/mpls.conf.part state=absent
-- file: path=~/configs/{{ ansible_host }}/{{ ansible_host }}.conf state=absent
+- name: Create the old configuration directory
+  file: 
+    path: ~/configs/{{ ansible_host }}
+    state: directory
 
-- name: interface Configuration
+- name: IGP configuration
   template:
     src={{ item }}.j2
-    dest=~/configs/{{ ansible_host }}/{{ item }}.part
+    dest=~/configs/{{ ansible_host }}/{{ ansible_loop.index }}_{{ item }}.part
   tags:
     - igp
-  with_items:
+  loop:
     - interfaces.conf
-
-- name: OSPF Configuration
-  template:
-    src={{ item }}.j2
-    dest=~/configs/{{ ansible_host }}/{{ item }}.part
-  tags:
-    - ospf
-    - igp
-  with_items:
     - ospf.conf
-
-- name: MPLS Configuration
-  template:
-    src={{ item }}.j2
-    dest=~/configs/{{ ansible_host }}/{{ item }}.part
-  tags:
-    - mpls
-    - igp
-  with_items:
     - mpls.conf
+  loop_control:
+    extended: yes

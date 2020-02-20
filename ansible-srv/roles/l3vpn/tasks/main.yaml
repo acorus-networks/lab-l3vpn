@@ -1,38 +1,25 @@
 ---
 
+- name: Remove the old configuration directory
+  file: 
+    path: ~/configs/{{ ansible_host }} 
+    state: absent
 
-- name: Create host specific configuration directory
-  file: path=~/configs/{{ ansible_host }} state=directory
+- name: Create the old configuration directory
+  file: 
+    path: ~/configs/{{ ansible_host }}
+    state: directory
 
-- file: path=~/configs/{{ ansible_host }}/02_vrf.conf.part state=absent
-- file: path=~/configs/{{ ansible_host }}/03_sessions.conf.part state=absent
-- file: path=~/configs/{{ ansible_host }}/04_sessions.conf.part state=absent
-- file: path=~/configs/{{ ansible_host }}/{{ ansible_host }}.conf state=absent
-
-
-- name: VRF L3VPN Configuration
+- name: L3VPN configuration
   template:
     src={{ item }}.j2
-    dest=~/configs/{{ ansible_host }}/02_{{ item }}.part
+    dest=~/configs/{{ ansible_host }}/{{ ansible_loop.index }}_{{ item }}.part
   tags:
     - l3vpn
-  with_items:
+  loop:
     - vrf.conf
-
-- name: Interfaces customers
-  template:
-    src={{ item }}.j2
-    dest=~/configs/{{ ansible_host }}/03_{{ item }}.part
-  tags:
-    - l3vpn
-  with_items:
     - interfaces.conf
-
-- name: BGP Session customers
-  template:
-    src={{ item }}.j2
-    dest=~/configs/{{ ansible_host }}/04_{{ item }}.part
-  tags:
-    - l3vpn
-  with_items:
     - sessions.conf
+  loop_control:
+    extended: yes
+
