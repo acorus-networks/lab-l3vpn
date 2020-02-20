@@ -14,7 +14,7 @@ customer_interfaces:
   speed: 10G
   type: customer-multi
   vlans:
-  - id: 10
+  - id: 0
     ipv4:
       local_ip: 100.64.3.0
       netmask: 31
@@ -24,7 +24,16 @@ customer_interfaces:
       netmask: 127
       peer_ip: 3000:3::1
     vrf: vpn-cust-x
-  - id: 20
+- asn: 30004
+  cid: xx-multi-01
+  interface: xe-0/0/2
+  name: Customer 4
+  patch_panel: PP-XX
+  slug: customer-4
+  speed: 10G
+  type: customer-multi
+  vlans:
+  - id: 0
     ipv4:
       local_ip: 100.64.4.0
       netmask: 31
@@ -48,9 +57,9 @@ l3vpn_sessions:
       peer_ip: 3000:3::1
 - vrf: vpn-aws-cust-1
   sessions:
-  - name: Customer 3
-    slug: customer-3
-    peer_asn: 30003
+  - name: Customer 4
+    slug: customer-4
+    peer_asn: 30004
     ipv4:
       peer_ip: 100.64.4.1
     ipv6:
