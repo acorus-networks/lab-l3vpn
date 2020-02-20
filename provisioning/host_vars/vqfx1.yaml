@@ -1,14 +1,15 @@
+---
 
 interfaces:
     - name: xe-0/0/0
-      ip: 10.0.1.0
-      netmask: 31
+      peer: vqfx2
     - name: xe-0/0/1
-      ip: 10.0.3.1
-      netmask: 31
+      peer: vqfx4
     - name: xe-0/0/2
-      ip: 100.64.1.0
-      netmask: 31
+      peer: customer1
+    - name: xe-0/0/3
+      peer: vqfx3
     - name: xe-0/0/4
+      peer: Management server
       ip: 192.168.100.20
       netmask: 24
