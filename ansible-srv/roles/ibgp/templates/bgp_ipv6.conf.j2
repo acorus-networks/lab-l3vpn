@@ -23,7 +23,7 @@ protocols {
       local-address {{ my_ipv6_loopback }};
       advertise-inactive;
 
-      {% for peer in peers %}
+      {% for peer in ibgp_peers %}
       neighbor {{ peer.ipv6 }};
       {% endfor %}
 
