@@ -1,5 +1,5 @@
 ---
-- name: Config Users of Juniper devices
+- name: Config IGP of Juniper devices
   hosts: all
   connection: network_cli
   gather_facts: no

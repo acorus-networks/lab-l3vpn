@@ -7,7 +7,7 @@
   roles:
     - Juniper.junos
     - tools
-    - bgp
+    - ibgp
 
   vars:
     ansible_network_os: junos
