@@ -23,7 +23,7 @@ bgp:
   sessions:
     ipv4:
       - peer_ip: 100.64.3.0
-        peer_asn: 35280
+        peer_asn: 4200000666
     ipv6:
       - peer_ip: fd02:3::0
-        peer_asn: 35280
+        peer_asn: 4200000666

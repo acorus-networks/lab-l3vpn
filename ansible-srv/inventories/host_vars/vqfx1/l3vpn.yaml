@@ -31,6 +31,7 @@ l3vpn_sessions:
   sessions:
   - name: Customer 1
     slug: customer-1
+    local_asn: 12345
     peer_asn: 30001
     ipv4:
       peer_ip: 100.64.1.1
