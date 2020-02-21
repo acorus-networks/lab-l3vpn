@@ -2,10 +2,10 @@
 
 # Requirement
 
-This Vagrantfile will spawn 3 instances of VQFX (Full), 3 customers and 1 server for management
+This Vagrantfile will spawn 4 instances of VQFX (Full), 5 customers and 1 server for management
 
 ### Resources
- - RAM : 10G
+ - RAM : 16 G
  - CPU : 6 Cores
 
 # Topology
@@ -44,13 +44,24 @@ This Vagrantfile will spawn 3 instances of VQFX (Full), 3 customers and 1 server
                     +---------+               +---------+
 ```
 
+IPv4 address used:
+- Loopback vQFX: 10.200.0.{id}
+- Loopback cust: 10.100.0.{id}
+- IGP: 10.0.0.X
+- Interco core/cust: 100.64.{id_cust}.0/31
+
+IPv4 address used:
+- Loopback vQFX: fd00::{id}
+- Loopback cust: fddd::{id}
+- IGP: fd01::X
+- Interco core/cust: fd02:{id_cust}::0/127
+
 # Provisioning
 
 All VQFX and server will be preconfigured.
 
-
 - vqfx: Ansible is used to configure interfaces
-- cust: Customer
+- cust: Customer (with 2 BGP sessions ipv4/ipv6)
 - srv: Ansible is used to prepare the machine (packages, ansible and demo files)
 
 ## Tools
@@ -69,6 +80,7 @@ $ ssh acorus@{{your_pod_ip}}
 
 #### Check vagrant env (shoud be ready to use) :
 
+Check all devices are virtualized
 ```
 acorus@instance-mpls:~$ cd lab-l3vpn
 acorus@instance-mpls:~/lab-l3vpn$ vagrant status
@@ -76,8 +88,8 @@ acorus@instance-mpls:~/lab-l3vpn$ vagrant status
 
 #### SSH to devices on lab :
 
-Connnect to your POD demo server.
-Then SSH to each device in the lab, repeat for vqfx1, vqfx2, vqfx3, srv, cust1, etc.
+Connnect to your demo server.
+Then SSH to each device in the lab
 
 ```
 acorus@instance-mpls:~$ cd lab-l3vpn
@@ -159,17 +171,37 @@ Everything is tested and ready, let's start the lab now !
 
 
 ## OSPF
+Configure all IGP settings:
+- Backbone interfaces
+- OSPF
+- MPLS
 
 ```
 ansible-playbook -i inventories/hosts pb.juniper.igp.yaml --vault-id ~/.vault_pass.txt
 ```
 
 ## iBGP
+Configure all iBGP sessions (full mesh)
+- BGP
+
 ```
 ansible-playbook -i inventories/hosts pb.juniper.bgp.yaml --vault-id ~/.vault_pass.txt
 ```
 
 ## L3VPN
+Configure all customers L3VPN
+- VRF L3VPN
+- Customer interfaces
+- Customer sessions
+
 ```
 ansible-playbook -i inventories/hosts pb.juniper.l3vpn.yaml --vault-id ~/.vault_pass.txt
+```
+
+Can check on the customer
+```
+vagrant ssh cust1
+ip route
+ping 5.5.5.5
+ping6 fddd::5
 ```
