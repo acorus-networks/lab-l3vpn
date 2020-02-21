@@ -33,6 +33,8 @@ protocols {
     path-mtu allow-fragmentation;
     statistics file mpls-stats;
     optimize-aggressive;
+    /* Do not show IP on the traceroute */
+    /* no-propagate-ttl; */
   }
 
   replace:

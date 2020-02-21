@@ -15,5 +15,5 @@ l3vpn_all_vrf:
     rd: "65500:2"
     target: "65000:2"
 
-
+l3vpn_max_prefixes: 1000
 
