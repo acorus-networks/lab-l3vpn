@@ -2,7 +2,7 @@
 
 my_ipv4_loopback: 10.200.0.3
 my_ipv6_loopback: fd00::3
-peers:
+ibgp_peers:
   - name: vqfx1
     ipv4: 10.200.0.1
     ipv6: fd00::1
