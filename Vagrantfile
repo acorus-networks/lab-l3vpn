@@ -13,29 +13,25 @@ UUID = "OGVIFL"
 # seg2: vqfx1:xe-0/0/1 -> seg32
 # seg3: vqfx1:xe-0/0/2 -> seg3
 # seg4: vqfx1:xe-0/0/3 -> seg4
-# seg5: vqfx1:xe-0/0/4 -> seg5
-# seg6: vqfx1:xe-0/0/5 -> seg00
+# seg6: vqfx1:xe-0/0/4 -> seg00
 ## VQFX 2
 # seg11: vqfx2:xe-0/0/0 -> seg1
 # seg12: vqfx2:xe-0/0/1 -> seg12
 # seg13: vqfx2:xe-0/0/2 -> seg13
 # seg14: vqfx2:xe-0/0/3 -> seg14
-# seg15: vqfx2:xe-0/0/4 -> seg15
-# seg16: vqfx2:xe-0/0/5 -> seg00
+# seg16: vqfx2:xe-0/0/4 -> seg00
 ## VQFX 3
 # seg21: vqfx3:xe-0/0/0 -> seg21
 # seg22: vqfx3:xe-0/0/1 -> seg12
 # seg23: vqfx3:xe-0/0/2 -> seg23
 # seg24: vqfx3:xe-0/0/3 -> seg4
-# seg25: vqfx3:xe-0/0/4 -> seg25 
-# seg26: vqfx3:xe-0/0/5 -> seg00
+# seg26: vqfx3:xe-0/0/4 -> seg00
 ## VQFX 4
 # seg31: vqfx4:xe-0/0/0 -> seg21
 # seg32: vqfx4:xe-0/0/1 -> seg32
 # seg33: vqfx4:xe-0/0/2 -> seg33
 # seg34: vqfx4:xe-0/0/3 -> seg34
-# seg35: vqfx4:xe-0/0/4 -> seg35
-# seg36: vqfx4:xe-0/0/5 -> seg00
+# seg36: vqfx4:xe-0/0/4 -> seg00
 ## Cust 1
 # cust1:eth1 -> seg00
 # cust1:eth2 -> seg3
@@ -97,8 +93,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         # xe-0/0/3
         vqfx.vm.network 'private_network', auto_config: false, nic_type: '82540EM', virtualbox__intnet: "#{UUID}_seg4"
         # xe-0/0/4
-        vqfx.vm.network 'private_network', auto_config: false, nic_type: '82540EM', virtualbox__intnet: "#{UUID}_seg5"
-        # xe-0/0/5
         vqfx.vm.network 'private_network', auto_config: false, nic_type: '82540EM', virtualbox__intnet: "#{UUID}_seg00"
     end
 
@@ -142,8 +136,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         # xe-0/0/3
         vqfx.vm.network 'private_network', auto_config: false, nic_type: '82540EM', virtualbox__intnet: "#{UUID}_seg14"
         # xe-0/0/4
-        vqfx.vm.network 'private_network', auto_config: false, nic_type: '82540EM', virtualbox__intnet: "#{UUID}_seg15"
-        # xe-0/0/5
         vqfx.vm.network 'private_network', auto_config: false, nic_type: '82540EM', virtualbox__intnet: "#{UUID}_seg00"
     
     end
@@ -187,8 +179,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         vqfx.vm.network 'private_network', auto_config: false, nic_type: '82540EM', virtualbox__intnet: "#{UUID}_seg23"
         # xe-0/0/3
         vqfx.vm.network 'private_network', auto_config: false, nic_type: '82540EM', virtualbox__intnet: "#{UUID}_seg4"
-        # xe-0/0/4
-        vqfx.vm.network 'private_network', auto_config: false, nic_type: '82540EM', virtualbox__intnet: "#{UUID}_seg25"
         # xe-0/0/5
         vqfx.vm.network 'private_network', auto_config: false, nic_type: '82540EM', virtualbox__intnet: "#{UUID}_seg00"
     end
@@ -233,8 +223,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         # xe-0/0/3
         vqfx.vm.network 'private_network', auto_config: false, nic_type: '82540EM', virtualbox__intnet: "#{UUID}_seg34"
         # xe-0/0/4
-        vqfx.vm.network 'private_network', auto_config: false, nic_type: '82540EM', virtualbox__intnet: "#{UUID}_seg35"
-        # xe-0/0/5
         vqfx.vm.network 'private_network', auto_config: false, nic_type: '82540EM', virtualbox__intnet: "#{UUID}_seg00"
     end
 
