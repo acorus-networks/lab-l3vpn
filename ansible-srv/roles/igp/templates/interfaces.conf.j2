@@ -9,14 +9,14 @@ interfaces {
 
     unit {{ loopback.vlan }} {
 
+      description "Loopback:{% if vlan.ipv4 is defined %} {{ loopback.ipv4.local_ip }}{% endif %}{% if vlan.ipv6 is defined %} {{ loopback.ipv6.local_ip }}{% endif %}"
+
       {% if loopback.ipv4 is defined %}
-      description "Loopback: {{ loopback.ipv4.local_ip }}";
       family inet {
         address {{ loopback.ipv4.local_ip }}/{{ loopback.ipv4.netmask }};
       }
       {% endif %}
       {% if loopback.ipv6 is defined %}
-      description "Loopback: {{ loopback.ipv6.local_ip }}";
       family inet6 {
         address {{ loopback.ipv6.local_ip }}/{{ loopback.ipv6.netmask }};
       }

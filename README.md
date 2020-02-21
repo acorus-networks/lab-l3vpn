@@ -185,7 +185,7 @@ Configure all iBGP sessions (full mesh)
 - BGP
 
 ```
-ansible-playbook -i inventories/hosts pb.juniper.bgp.yaml --vault-id ~/.vault_pass.txt
+ansible-playbook -i inventories/hosts pb.juniper.ibgp.yaml --vault-id ~/.vault_pass.txt
 ```
 
 ## L3VPN
