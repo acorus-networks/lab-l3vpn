@@ -15,17 +15,6 @@ groups {
     }
   }
   replace:
-  lsp-default {
-    protocols {
-      mpls {
-        label-switched-path <> {
-          optimize-timer 1800;
-          adaptive;
-        }
-      }
-    }
-  }
-  replace:
   mpls-interface {
     interfaces {
       <*> {
@@ -39,17 +28,9 @@ groups {
 
 protocols {
 
-{#   replace:
-  rsvp {
-    load-balance bandwidth;
-  } #}
-
   replace:
   mpls {
-    apply-groups lsp-default;
     path-mtu allow-fragmentation;
-{#     path-mtu rsvp mtu-signaling;
- #}    
     statistics file mpls-stats;
     optimize-aggressive;
   }
@@ -60,26 +41,8 @@ protocols {
     keepalive-interval 3;
     keepalive-timeout 18;
   }
+
 }
-
-
-
-{# {% if igp.loopbacks is defined %}
-{% for loopback in igp.loopbacks %}
-{% if loopback.vrf is not defined %}
-protocols {
-
-  rsvp {
-    interface lo0.{{ loopback.vlan }};
-  }
-
-  ldp {
-    interface lo0.{{ loopback.vlan }} apply-groups ldp-interface;
-  }
-}
-{% endif %}
-{% endfor %}
-{% endif %} #}
 
 
 {% if igp.neighbors is defined %}
@@ -88,42 +51,33 @@ protocols {
 
 {% for vlan in neighbor.vlans %}
 {% if vlan.vrf is not defined %}
-{% set id = vlan.id %}
-
-
 protocols {
-
-{#   rsvp {
-    interface {{ neighbor.interface }}.{{ id }} aggregate;
-  } #}
-
   mpls {
-    interface {{ neighbor.interface }}.{{ id }};
+    interface {{ neighbor.interface }}.{{ vlan.id }};
   }
 
   ldp {
-    interface {{ neighbor.interface }}.{{ id }} apply-groups ldp-interface;
+    interface {{ neighbor.interface }}.{{ vlan.id }} apply-groups ldp-interface;
   }
 }
 
 interfaces {
-  {{ neighbor.interface }}.{{ id }} {
+  {{ neighbor.interface }}.{{ vlan.id }} {
     apply-groups mpls-interface;
   }
 }
-{# Endif vlan.vrf is not defined #}
+{# if vlan.vrf is not defined #}
 {% endif %}
 {# for vlan in neighbor.vlans #}
 {% endfor %}
 
-{# Endif neighbor.type equal core interface #}
+{# if neighbor.vlans is defined #}
 {% endif %}
-{# Endfor neighbor in igp.neighbors #}
+{# for neighbor in igp.neighbors #}
 {% endfor %}
-{# Endif igp.neighbors is defined #}
+{# if igp.neighbors is defined #}
 {% endif %}
-
-
+{# if igp is defined #}
 {% endif %}
 
 

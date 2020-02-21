@@ -1,11 +1,14 @@
 ---
 
-my_asn: 35280
-my_loopback: 10.200.0.2
+my_ipv4_loopback: 10.200.0.2
+my_ipv6_loopback: fd00::2
 peers:
   - name: vqfx1
     ipv4: 10.200.0.1
+    ipv6: fd00::1
   - name: vqfx3
     ipv4: 10.200.0.3
+    ipv6: fd00::3
   - name: vqfx4
     ipv4: 10.200.0.4
+    ipv6: fd00::4

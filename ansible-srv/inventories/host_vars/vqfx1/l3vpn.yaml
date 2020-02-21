@@ -20,9 +20,9 @@ customer_interfaces:
       netmask: 31
       peer_ip: 100.64.1.1
     ipv6:
-      local_ip: 3000:1::0
+      local_ip: fd02:1::0
       netmask: 127
-      peer_ip: 3000:1::1
+      peer_ip: fd02:1::1
     vrf: vpn-15
 
 # Voir ou on le stock (acnet? -> manque vrf)
@@ -35,4 +35,4 @@ l3vpn_sessions:
     ipv4:
       peer_ip: 100.64.1.1
     ipv6:
-      peer_ip: 3000:1::1
+      peer_ip: fd02:1::1

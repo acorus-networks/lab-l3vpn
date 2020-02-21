@@ -10,7 +10,7 @@ iface lo inet6 static
     address {{ loopback.ipv6.ip }}
     netmask {{ loopback.ipv6.netmask }}
 
-# The primary network interface
+# The primary network interface - Used by vagrant
 allow-hotplug eth0
 iface eth0 inet dhcp
 

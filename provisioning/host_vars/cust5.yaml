@@ -8,14 +8,14 @@ interfaces:
       ip: 100.64.5.1
       netmask: 31
     ipv6:
-      ip: 3000:5::1
+      ip: fd02:5::1
       netmask: 127 
 loopback:
   ipv4: 
     ip: 5.5.5.5
     netmask: 24
   ipv6:
-    ip: "2001:db8:0:4::"
+    ip: "fddd:5::1"
     netmask: 64
 bgp:
   id: 5.5.5.5
@@ -25,5 +25,5 @@ bgp:
       - peer_ip: 100.64.5.0
         peer_asn: 35280
     ipv6:
-      - peer_ip: 3000:5::0
+      - peer_ip: fd02:5::0
         peer_asn: 35280

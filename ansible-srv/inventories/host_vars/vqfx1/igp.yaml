@@ -3,6 +3,9 @@ igp:
   - ipv4:
       local_ip: 10.200.0.1
       netmask: 32
+    ipv6:
+      local_ip: fd00::1
+      netmask: 128    
     name: lo0
     vlan: 0
   neighbors:
@@ -16,6 +19,10 @@ igp:
         local_ip: 10.0.0.0
         netmask: 31
         peer_ip: 10.0.0.1
+      ipv6:
+        local_ip: fd01::0
+        netmask: 127
+        peer_ip: fd01::1
   - interface: xe-0/0/1
     peer: vqfx4
     speed: 10G
@@ -26,6 +33,10 @@ igp:
         local_ip: 10.0.0.7
         netmask: 31
         peer_ip: 10.0.0.6
+      ipv6:
+        local_ip: fd01::7
+        netmask: 127
+        peer_ip: fd01::6
   - interface: xe-0/0/3
     peer: vqfx3
     speed: 10G
@@ -36,3 +47,7 @@ igp:
         local_ip: 10.0.0.8
         netmask: 31
         peer_ip: 10.0.0.9
+      ipv6:
+        local_ip: fd01::8
+        netmask: 127
+        peer_ip: fd01::9

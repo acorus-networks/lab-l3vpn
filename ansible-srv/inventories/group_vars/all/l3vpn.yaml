@@ -1,6 +1,6 @@
 ---
 
-my_asn: 35280
+my_asn: 4200000666
 
 # Netbox via VRF
 l3vpn_all_vrf:

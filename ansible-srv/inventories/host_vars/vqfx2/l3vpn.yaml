@@ -19,9 +19,9 @@ customer_interfaces:
       netmask: 31
       peer_ip: 100.64.2.1
     ipv6:
-      local_ip: 3000:2::0
+      local_ip: fd02:2::0
       netmask: 127
-      peer_ip: 3000:2::1
+      peer_ip: fd02:2::1
     vrf: vpn-234
 
 l3vpn_sessions:
@@ -33,4 +33,4 @@ l3vpn_sessions:
     ipv4:
       peer_ip: 100.64.2.1
     ipv6:
-      peer_ip: 3000:2::1
+      peer_ip: fd02:2::1

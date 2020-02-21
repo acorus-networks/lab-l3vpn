@@ -17,6 +17,7 @@
   tags:
     - bgp
   loop:
-    - bgp.conf
+    - bgp_ipv4.conf
+    - bgp_ipv6.conf
   loop_control:
     extended: yes

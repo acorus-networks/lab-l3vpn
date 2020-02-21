@@ -9,7 +9,7 @@ router id {{ bgp.id }};
 log syslog { debug, trace, info, remote, warning, error, auth, fatal, bug };
 
 protocol direct my_network {
-    interface "lo*", "eth2";
+    interface "lo*";
     import all;
     export none;
 }

@@ -1,5 +1,7 @@
-protocols {
+#jinja2: lstrip_blocks: "True", trim_blocks: "True"
 
+{% if ibgp_peers is defined and my_ipv4_loopback is defined %}
+protocols {
   bgp {
 
     replace:
@@ -17,20 +19,19 @@ protocols {
       }
 
       local-as {{ my_asn }};
-      local-address {{ my_loopback }};
+      local-address {{ my_ipv4_loopback }};
       advertise-inactive;
 
-      {% for peer in peers %}
+      {% for peer in ibgp_peers %}
       neighbor {{ peer.ipv4 }};
       {% endfor %}
 
       import ipv4-ibgp-in;
       export ipv4-ibgp-out;
-
     }
+    
   }
 }
-
 
 policy-options {
 
@@ -44,3 +45,6 @@ policy-options {
     then accept;
   }
 }
+
+{# if ibgp_peers is defined and my_ipv4_loopback is defined #}
+{% endif %}

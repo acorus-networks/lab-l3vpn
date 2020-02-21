@@ -5,56 +5,53 @@
 
 {% set data_vrf = l3vpn_all_vrf[vrf_name] %}
 
-
 routing-instances {
-    replace:
-    {{ data_vrf.slug }} {
-        instance-type vrf;
-        vrf-import {{ data_vrf.slug }}-in;
-        vrf-export {{ data_vrf.slug }}-out;
-        route-distinguisher {{ data_vrf.rd }};
-        {# vrf-target target:{{ data_vrf.target }}; #}
-    }
+  replace:
+  {{ data_vrf.slug }} {
+    instance-type vrf;
+    vrf-import {{ data_vrf.slug }}-in;
+    vrf-export {{ data_vrf.slug }}-out;
+    route-distinguisher {{ data_vrf.rd }};
+  }
 }
 
 policy-options {
-    replace:
-    community {{ data_vrf.slug|upper }} members target:{{ data_vrf.target }};
+  replace:
+  community {{ data_vrf.slug|upper }} members target:{{ data_vrf.target }};
 }
 
 policy-options {
-    replace:
-    policy-statement {{ data_vrf.slug }}-in {
-        term bgp {
-            from {
-                protocol bgp;
-                community {{ data_vrf.slug|upper }};
-            }
-            then accept;
-        }
-        then reject;
+  replace:
+  policy-statement {{ data_vrf.slug }}-in {
+    term bgp {
+      from {
+        protocol bgp;
+        community {{ data_vrf.slug|upper }};
+      }
+      then accept;
     }
+    then reject;
+  }
 }
 
 policy-options {
-    replace:
-    policy-statement {{ data_vrf.slug }}-out {
-        term bgp {
-            from {
-                protocol bgp;
-            }
-            then {
-                community add {{ data_vrf.slug|upper }};
-                accept;
-            }
-        }
-        then reject;
+  replace:
+  policy-statement {{ data_vrf.slug }}-out {
+    term bgp {
+      from {
+        protocol bgp;
+      }
+      then {
+        community add {{ data_vrf.slug|upper }};
+        accept;
+      }
     }
+    then reject;
+  }
 }
 
 {# for vrf_name in l3vpn_vrf_local #}
 {% endfor %}
-
 {# endif l3vpn_vrf_local is defined #}
 {% endif %}
 

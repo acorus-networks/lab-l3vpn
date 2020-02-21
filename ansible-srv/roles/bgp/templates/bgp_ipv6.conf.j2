@@ -1,0 +1,51 @@
+#jinja2: lstrip_blocks: "True", trim_blocks: "True"
+
+{% if ibgp_peers is defined and my_ipv4_loopback is defined %}
+protocols {
+
+  bgp {
+
+    replace:
+    group ipv6-ibgp {
+
+      type internal;
+      description "iBGP {{ my_asn }}"
+      
+      family inet6 {
+        unicast;
+      }
+
+      family inet6-vpn {
+        unicast;
+      }
+
+      local-as {{ my_asn }};
+      local-address {{ my_ipv6_loopback }};
+      advertise-inactive;
+
+      {% for peer in peers %}
+      neighbor {{ peer.ipv6 }};
+      {% endfor %}
+
+      import ipv6-ibgp-in;
+      export ipv6-ibgp-out;
+
+    }
+  }
+}
+
+policy-options {
+
+  replace:
+  policy-statement ipv6-ibgp-in {
+    then accept;
+  }
+
+  replace:
+  policy-statement ipv6-ibgp-out {
+    then accept;
+  }
+}
+
+{# if ibgp_peers is defined and my_ipv6_loopback is defined #}
+{% endif %}
