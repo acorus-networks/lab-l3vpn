@@ -1,0 +1,14 @@
+---
+
+# show ospf interface | display xml rpc
+LdpSessionTable:
+  rpc: get-ldp-session-information
+  item: ldp-session
+  key: ldp-neighbor-address
+  view: LdpSession
+
+LdpSession:
+  fields:
+    neighbor_address: ldp-neighbor-address
+    session_state: ldp-session-state
+    connection_state: ldp-connection-state

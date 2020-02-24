@@ -77,3 +77,18 @@
         - item.interface_status != "Full"
       with_items:
         - "{{ ospf3_neighbor_result.resource }}"
+
+    - name: Get LDP Sessions
+      juniper_junos_table: 
+        path: "{{ path_dir }}"
+        file: "ldp.yaml"
+        table: "LdpSessionTable"
+      register: ldp_sessions_result
+
+    - name: Check LDP Session Operational
+      fail:
+        msg: "Session is not Operationnal or Open - Neighbor {{ item.neighbor_address }}"
+      when: 
+        - not (item.session_state == "Open" and item.connection_state == "Operational")
+      with_items:
+        - "{{ ldp_sessions_result.resource }}"
