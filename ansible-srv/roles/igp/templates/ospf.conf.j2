@@ -14,6 +14,19 @@ groups {
       }
     }
   }
+  replace:
+  /* OSPF Core */
+  ospf3-core {
+    protocols {
+      ospf3 {
+        area <*> {
+          interface <*> {
+            interface-type p2p;
+          }
+        }
+      }
+    }
+  }
 }
 
 {% if igp is defined %}
@@ -95,7 +108,7 @@ protocols {
     area 0.0.0.0 {
       replace:
       interface {{ neighbor.interface }}.{{ vlan.id }} {
-        apply-groups ospf-core;
+        apply-groups ospf3-core;
 
         {% if neighbor.metric is defined -%}
         metric {{ neighbor.metric }};

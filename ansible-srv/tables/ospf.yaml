@@ -1,0 +1,55 @@
+---
+
+# show ospf interface | display xml rpc
+OspfInterfaceTable:
+  rpc: get-ospf-interface-information
+  item: ospf-interface
+  key: interface-name
+  view: OspfInterface
+
+OspfInterface:
+  fields:
+    interface_name: interface-name
+    interface_status: ospf-interface-state
+    neighbor_count: neighbor-count
+
+# show ospf neighbor | display xml rpc
+OspfNeighborTable:
+  rpc: get-ospf-neighbor-information
+  item: ospf-neighbor
+  key: interface-name
+  view: OspfNeighbor
+
+OspfNeighbor:
+  fields:
+    interface_name: interface-name
+    interface_status: ospf-neighbor-state
+    neighbor_address: neighbor-address
+    neighbor_id: neighbor-id
+
+# show ospf3 interface | display xml rpc
+Ospf3InterfaceTable:
+  rpc: get-ospf3-interface-information
+  item: ospf3-interface
+  key: interface-name
+  view: Ospf3Interface
+
+Ospf3Interface:
+  fields:
+    interface_name: interface-name
+    interface_status: ospf-interface-state
+    neighbor_count: neighbor-count
+
+# show ospf3 neighbor | display xml rpc
+Ospf3NeighborTable:
+  rpc: get-ospf3-neighbor-information
+  item: ospf3-neighbor
+  key: interface-name
+  view: Ospf3Neighbor
+
+Ospf3Neighbor:
+  fields:
+    interface_name: interface-name
+    interface_status: ospf-neighbor-state
+    neighbor_address: neighbor-address
+    neighbor_id: neighbor-id

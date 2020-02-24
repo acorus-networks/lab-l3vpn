@@ -1,0 +1,79 @@
+---
+- name: Config IGP of Juniper devices
+  hosts: all
+  connection: network_cli
+  gather_facts: no
+ 
+  roles:
+    - Juniper.junos
+
+  vars:
+    ansible_network_os: junos
+    ansible_user: noc
+    path_dir: "tables/"
+
+  tasks:
+
+    - name: Get OSPF Interface 
+      juniper_junos_table: 
+        path: "{{ path_dir }}"
+        file: "ospf.yaml"
+        table: "OspfInterfaceTable"
+        kwargs:
+          interface_name: '[ae|et|xe|ge]*'
+      register: ospf_interface_result
+
+    - name: Check OSPF neighbor count (P2P = 1)
+      fail:
+        msg: "No neighbor at the end - Interface {{ item.interface_name }}"
+      when: 
+        - not (item.neighbor_count == "1" and item.interface_status == "PtToPt")
+      with_items:
+        - "{{ ospf_interface_result.resource }}"
+
+    - name: Get OSPF3 Interface 
+      juniper_junos_table: 
+        path: "{{ path_dir }}"
+        file: "ospf.yaml"
+        table: "Ospf3InterfaceTable"
+        kwargs:
+          interface_name: '[ae|et|xe|ge]*'
+      register: ospf3_interface_result
+
+    - name: Check OSPF3 neighbor count (P2P = 1)
+      fail:
+        msg: "No neighbor at the end - Interface {{ item.interface_name }}"
+      when: 
+        - not (item.neighbor_count == "1" and item.interface_status == "PtToPt")
+      with_items:
+        - "{{ ospf3_interface_result.resource }}"
+
+    - name: Get OSPF Neighbors
+      juniper_junos_table: 
+        path: "{{ path_dir }}"
+        file: "ospf.yaml"
+        table: "OspfNeighborTable"
+      register: ospf_neighbor_result
+
+    - name: Check OSPF Neighbors FULL
+      fail:
+        msg: "Session is not FULL - Interface {{ item.interface_name }}"
+      when: 
+        - item.interface_status != "Full"
+      with_items:
+        - "{{ ospf_neighbor_result.resource }}"
+
+    - name: Get OSPF3 Neighbors
+      juniper_junos_table: 
+        path: "{{ path_dir }}"
+        file: "ospf.yaml"
+        table: "Ospf3NeighborTable"
+      register: ospf3_neighbor_result
+
+    - name: Check OSPF Neighbors FULL
+      fail:
+        msg: "Session is not FULL - Interface {{ item.interface_name }}"
+      when: 
+        - item.interface_status != "Full"
+      with_items:
+        - "{{ ospf3_neighbor_result.resource }}"
