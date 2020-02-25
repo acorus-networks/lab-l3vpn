@@ -1,5 +1,7 @@
 #jinja2: lstrip_blocks: "True", trim_blocks: "True"
 
+{% if igp is defined %}
+
 groups {
   replace:
   /* OSPF Core */
@@ -29,7 +31,6 @@ groups {
   }
 }
 
-{% if igp is defined %}
 {% if igp.loopbacks is defined %}
 {% for loopback in igp.loopbacks %}
 
