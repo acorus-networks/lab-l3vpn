@@ -37,13 +37,18 @@ protocols {
     /* no-propagate-ttl; */
     /* Do not decrease TTL : ICMP */
     /* no-decrement-ttl; */
+    /* Enable IPv6 over MPLS */
+    ipv6-tunneling;
   }
 
   replace:
   ldp {
+    /* Use different Label for v4 and v6 */
+    deaggregate;
     track-igp-metric;
     keepalive-interval 3;
     keepalive-timeout 18;
+    /* Use v4 and v6 */
     family {
       inet6;
       inet;
