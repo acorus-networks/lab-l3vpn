@@ -18,6 +18,10 @@ protocols {
         unicast;
       }
 
+      family inet6-vpn {
+        unicast;
+      }
+
       local-as {{ my_asn }};
       local-address {{ my_ipv4_loopback }};
       advertise-inactive;

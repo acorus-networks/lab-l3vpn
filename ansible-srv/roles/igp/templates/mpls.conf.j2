@@ -44,9 +44,23 @@ protocols {
     track-igp-metric;
     keepalive-interval 3;
     keepalive-timeout 18;
+    family {
+      inet6;
+      inet;
+    }
   }
 
 }
+
+{% if igp.loopbacks is defined %}
+{% for loopback in igp.loopbacks %}
+protocols {
+  ldp {
+    interface {{ loopback.name }}.{{ loopback.vlan }};
+  }
+}
+{% endfor %}
+{% endif %}
 
 
 {% if igp.neighbors is defined %}
