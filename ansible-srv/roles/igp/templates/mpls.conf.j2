@@ -30,8 +30,15 @@ protocols {
 
   replace:
   mpls {
-    path-mtu allow-fragmentation;
-    statistics file mpls-stats;
+    path-mtu {
+      /* Allow packets to be fragmented before encapsulated in MPLS */
+      allow-fragmentation;
+    }
+    statistics {
+      /* Enable statistics on file - 5 minutes */
+      file mpls-stats.log;
+    }
+    /* reoptimization process more aggressive */ 
     optimize-aggressive;
     /* Do not show IP on the traceroute */
     /* no-propagate-ttl; */
@@ -45,6 +52,7 @@ protocols {
   ldp {
     /* Use different Label for v4 and v6 */
     deaggregate;
+    /* Use IGP metric instead of default = 1 */
     track-igp-metric;
     keepalive-interval 3;
     keepalive-timeout 18;
